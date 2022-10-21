@@ -1,0 +1,57 @@
+<?php declare(strict_types=1);
+
+namespace Maltehuebner\DataQueryBundle\Parameter;
+
+use Maltehuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
+use Maltehuebner\DataQueryBundle\Validator\Constraint\Sortable;
+use Elastica\Query;
+use Symfony\Component\Validator\Constraints as Constraints;
+
+class OrderParameter extends AbstractParameter implements PropertyTargetingParameterInterface
+{
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("string")
+     * @Sortable
+     * @var string $propertyName
+     */
+    protected $propertyName;
+
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("string")
+     * @Constraints\Choice(choices = {"ASC", "DESC"})
+     * @var string $direction
+     */
+    protected $direction;
+
+    /**
+     * @DataQuery\RequiredParameter(parameterName="orderBy")
+     */
+    public function setPropertyName(string $propertyName): OrderParameter
+    {
+        $this->propertyName = $propertyName;
+
+        return $this;
+    }
+
+    public function getPropertyName(): string
+    {
+        return $this->propertyName;
+    }
+
+    /**
+     * @DataQuery\RequiredParameter(parameterName="orderDirection")
+     */
+    public function setDirection(string $direction): OrderParameter
+    {
+        $this->direction = strtoupper($direction);
+
+        return $this;
+    }
+
+    public function addToElasticQuery(Query $query): Query
+    {
+        return $query->addSort([$this->propertyName => ['order' => $this->direction]]);
+    }
+}

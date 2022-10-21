@@ -1,0 +1,24 @@
+{
+    "name": "maltehuebner/dataquery-bundle",
+    "type": "library",
+    "require": {
+        "php": "^7.4",
+        "ruflin/elastica": "^7.2",
+        "symfony/framework-bundle": "^5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Maltehuebner\\DataqueryBundle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Malte Huebner",
+            "email": "maltehuebner@gmx.org"
+        }
+    ],
+    "minimum-stability": "stable"
+}
