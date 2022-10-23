@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Query;
+namespace MalteHuebner\DataQueryBundle\Query;
 
-use Maltehuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
-use Maltehuebner\DataQueryBundle\Validator\Constraint\BoundingBoxValues;
+use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Validator\Constraint\BoundingBoxValues;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**

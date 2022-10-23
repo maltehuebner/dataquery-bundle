@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Query;
+namespace MalteHuebner\DataQueryBundle\Query;
 
 interface DoctrineQueryInterface extends QueryInterface
 {

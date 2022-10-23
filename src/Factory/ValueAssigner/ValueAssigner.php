@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Factory\ValueAssigner;
+namespace MalteHuebner\DataQueryBundle\Factory\ValueAssigner;
 
-use Maltehuebner\DataQueryBundle\Factory\ParamConverterFactory\ParamConverterFactoryInterface;
-use Maltehuebner\DataQueryBundle\FieldList\ParameterFieldList\ParameterField;
-use Maltehuebner\DataQueryBundle\FieldList\QueryFieldList\QueryField;
-use Maltehuebner\DataQueryBundle\Parameter\ParameterInterface;
-use Maltehuebner\DataQueryBundle\Query\QueryInterface;
-use Maltehuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
+use MalteHuebner\DataQueryBundle\Factory\ParamConverterFactory\ParamConverterFactoryInterface;
+use MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList\ParameterField;
+use MalteHuebner\DataQueryBundle\FieldList\QueryFieldList\QueryField;
+use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
+use MalteHuebner\DataQueryBundle\Query\QueryInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;

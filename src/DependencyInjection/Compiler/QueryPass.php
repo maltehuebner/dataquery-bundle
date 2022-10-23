@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\DependencyInjection\Compiler;
+namespace MalteHuebner\DataQueryBundle\DependencyInjection\Compiler;
 
-use Maltehuebner\DataQueryBundle\Manager\QueryManagerInterface;
+use MalteHuebner\DataQueryBundle\Manager\QueryManagerInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

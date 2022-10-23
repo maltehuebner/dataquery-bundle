@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FieldList\QueryFieldList;
+namespace MalteHuebner\DataQueryBundle\FieldList\QueryFieldList;
 
 interface QueryFieldListFactoryInterface
 {

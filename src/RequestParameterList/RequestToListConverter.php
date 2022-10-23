@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\RequestParameterList;
+namespace MalteHuebner\DataQueryBundle\RequestParameterList;
 
 use Symfony\Component\HttpFoundation\Request;
 

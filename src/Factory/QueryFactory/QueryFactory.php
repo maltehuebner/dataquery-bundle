@@ -1,18 +1,18 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Factory\QueryFactory;
+namespace MalteHuebner\DataQueryBundle\Factory\QueryFactory;
 
-use Maltehuebner\DataQueryBundle\Factory\ConflictResolver\ConflictResolver;
-use Maltehuebner\DataQueryBundle\Factory\ValueAssigner\ValueAssignerInterface;
-use Maltehuebner\DataQueryBundle\FieldList\EntityFieldList\EntityField;
-use Maltehuebner\DataQueryBundle\FieldList\EntityFieldList\EntityFieldListFactoryInterface;
-use Maltehuebner\DataQueryBundle\FieldList\QueryFieldList\QueryField;
-use Maltehuebner\DataQueryBundle\FieldList\QueryFieldList\QueryFieldListFactoryInterface;
-use Maltehuebner\DataQueryBundle\Manager\QueryManagerInterface;
-use Maltehuebner\DataQueryBundle\Query\BooleanQuery;
-use Maltehuebner\DataQueryBundle\Query\DateTimeQueryInterface;
-use Maltehuebner\DataQueryBundle\Query\QueryInterface;
-use Maltehuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
+use MalteHuebner\DataQueryBundle\Factory\ConflictResolver\ConflictResolver;
+use MalteHuebner\DataQueryBundle\Factory\ValueAssigner\ValueAssignerInterface;
+use MalteHuebner\DataQueryBundle\FieldList\EntityFieldList\EntityField;
+use MalteHuebner\DataQueryBundle\FieldList\EntityFieldList\EntityFieldListFactoryInterface;
+use MalteHuebner\DataQueryBundle\FieldList\QueryFieldList\QueryField;
+use MalteHuebner\DataQueryBundle\FieldList\QueryFieldList\QueryFieldListFactoryInterface;
+use MalteHuebner\DataQueryBundle\Manager\QueryManagerInterface;
+use MalteHuebner\DataQueryBundle\Query\BooleanQuery;
+use MalteHuebner\DataQueryBundle\Query\DateTimeQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\QueryInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\ConstraintViolationListInterface;

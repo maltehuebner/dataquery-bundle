@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Parameter;
+namespace MalteHuebner\DataQueryBundle\Parameter;
 
-use Maltehuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 

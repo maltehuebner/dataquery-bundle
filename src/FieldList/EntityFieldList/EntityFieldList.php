@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FieldList\EntityFieldList;
+namespace MalteHuebner\DataQueryBundle\FieldList\EntityFieldList;
 
-use Maltehuebner\DataQueryBundle\FieldList\AbstractFieldList;
+use MalteHuebner\DataQueryBundle\FieldList\AbstractFieldList;
 
 class EntityFieldList extends AbstractFieldList
 {

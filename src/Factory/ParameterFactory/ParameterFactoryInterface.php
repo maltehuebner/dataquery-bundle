@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Factory\ParameterFactory;
+namespace MalteHuebner\DataQueryBundle\Factory\ParameterFactory;
 
-use Maltehuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 
 interface ParameterFactoryInterface
 {

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Validator\Constraint;
+namespace MalteHuebner\DataQueryBundle\Validator\Constraint;
 
-use Maltehuebner\DataQueryBundle\Validator\SortableValidator;
+use MalteHuebner\DataQueryBundle\Validator\SortableValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**

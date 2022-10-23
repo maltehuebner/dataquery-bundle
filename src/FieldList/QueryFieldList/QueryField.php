@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FieldList\QueryFieldList;
+namespace MalteHuebner\DataQueryBundle\FieldList\QueryFieldList;
 
-use Maltehuebner\DataQueryBundle\FieldList\AbstractField;
+use MalteHuebner\DataQueryBundle\FieldList\AbstractField;
 
 class QueryField extends AbstractField
 {

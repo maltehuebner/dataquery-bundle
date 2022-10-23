@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Factory\ConflictResolver;
+namespace MalteHuebner\DataQueryBundle\Factory\ConflictResolver;
 
-use Maltehuebner\DataQueryBundle\Query\QueryInterface;
+use MalteHuebner\DataQueryBundle\Query\QueryInterface;
 use App\Criticalmass\Util\ClassUtil;
 
 class ConflictResolver

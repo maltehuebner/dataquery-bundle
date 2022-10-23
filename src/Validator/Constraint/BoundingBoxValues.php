@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Validator\Constraint;
+namespace MalteHuebner\DataQueryBundle\Validator\Constraint;
 
-use Maltehuebner\DataQueryBundle\Validator\BoundingBoxValidator;
+use MalteHuebner\DataQueryBundle\Validator\BoundingBoxValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**

@@ -12,7 +12,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Maltehuebner\\DataQueryBundle\\": "src/"
+            "MalteHuebner\\DataQueryBundle\\": "src/"
         }
     },
     "authors": [

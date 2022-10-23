@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FieldList\QueryFieldList;
+namespace MalteHuebner\DataQueryBundle\FieldList\QueryFieldList;
 
-use Maltehuebner\DataQueryBundle\Annotation\QueryAnnotation\RequiredQueryParameter;
-use Maltehuebner\DataQueryBundle\Exception\NotOneParameterForRequiredMethodException;
-use Maltehuebner\DataQueryBundle\Exception\NoTypedParameterForRequiredMethodException;
+use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation\RequiredQueryParameter;
+use MalteHuebner\DataQueryBundle\Exception\NotOneParameterForRequiredMethodException;
+use MalteHuebner\DataQueryBundle\Exception\NoTypedParameterForRequiredMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class QueryFieldListFactory implements QueryFieldListFactoryInterface

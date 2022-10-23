@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Parameter;
+namespace MalteHuebner\DataQueryBundle\Parameter;
 
 interface PropertyTargetingParameterInterface extends ParameterInterface
 {
