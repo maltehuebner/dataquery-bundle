@@ -6,8 +6,7 @@
     <services>
         <defaults autowire="true" autoconfigure="true" public="true"/>
 
-        <prototype namespace="MalteHuebner\DataQueryBundle\" resource="../../*" exclude="../../{DependencyInjection,tests}"/>
-
-        <service id="maltehuebner_dataquery_manager" class="MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface" />
+        <prototype namespace="MalteHuebner\DataQueryBundle\" resource="../src/{Annotation,DataQueryManager,Factory,FieldList,FinderFactory,Manager,Parameter,Query,RequestParamterList,Validator}" exclude="../src/{DependencyInjection,tests,MalteHuebnerDataQueryBundle}"/>
+        <service id="MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface" class="MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManager" />
     </services>
 </container>
