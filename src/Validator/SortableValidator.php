@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Validator;
+namespace MalteHuebner\DataQueryBundle\Validator;
 
-use Maltehuebner\DataQueryBundle\FieldList\EntityFieldList\EntityField;
-use Maltehuebner\DataQueryBundle\FieldList\EntityFieldList\EntityFieldList;
-use Maltehuebner\DataQueryBundle\FieldList\EntityFieldList\EntityFieldListFactoryInterface;
-use Maltehuebner\DataQueryBundle\Parameter\ParameterInterface;
+use MalteHuebner\DataQueryBundle\FieldList\EntityFieldList\EntityField;
+use MalteHuebner\DataQueryBundle\FieldList\EntityFieldList\EntityFieldList;
+use MalteHuebner\DataQueryBundle\FieldList\EntityFieldList\EntityFieldListFactoryInterface;
+use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 

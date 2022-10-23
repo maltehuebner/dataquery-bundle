@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Manager;
+namespace MalteHuebner\DataQueryBundle\Manager;
 
-use Maltehuebner\DataQueryBundle\Parameter\ParameterInterface;
+use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
 
 interface ParameterManagerInterface
 {

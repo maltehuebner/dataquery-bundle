@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FieldList\EntityFieldList;
+namespace MalteHuebner\DataQueryBundle\FieldList\EntityFieldList;
 
 interface EntityFieldListFactoryInterface
 {

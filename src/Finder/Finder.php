@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Finder;
+namespace MalteHuebner\DataQueryBundle\Finder;
 
-use Maltehuebner\DataQueryBundle\Parameter\ParameterInterface;
-use Maltehuebner\DataQueryBundle\Query\ElasticQueryInterface;
-use Maltehuebner\DataQueryBundle\Query\QueryInterface;
+use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
+use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\QueryInterface;
 use FOS\ElasticaBundle\Finder\FinderInterface as FOSFinderInterface;
 
 class Finder implements FinderInterface

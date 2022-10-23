@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\DataQueryManager;
+namespace MalteHuebner\DataQueryBundle\DataQueryManager;
 
-use Maltehuebner\DataQueryBundle\Factory\ParameterFactory\ParameterFactoryInterface;
-use Maltehuebner\DataQueryBundle\Factory\QueryFactory\QueryFactoryInterface;
-use Maltehuebner\DataQueryBundle\FinderFactory\FinderFactoryInterface;
-use Maltehuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
+use MalteHuebner\DataQueryBundle\Factory\ParameterFactory\ParameterFactoryInterface;
+use MalteHuebner\DataQueryBundle\Factory\QueryFactory\QueryFactoryInterface;
+use MalteHuebner\DataQueryBundle\FinderFactory\FinderFactoryInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 
 class DataQueryManager implements DataQueryManagerInterface
 {

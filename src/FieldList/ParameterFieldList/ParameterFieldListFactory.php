@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FieldList\ParameterFieldList;
+namespace MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList;
 
-use Maltehuebner\DataQueryBundle\Annotation\AnnotationInterface;
-use Maltehuebner\DataQueryBundle\Annotation\ParameterAnnotation\RequiredParameter;
-use Maltehuebner\DataQueryBundle\Exception\NotOneParameterForRequiredMethodException;
+use MalteHuebner\DataQueryBundle\Annotation\AnnotationInterface;
+use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation\RequiredParameter;
+use MalteHuebner\DataQueryBundle\Exception\NotOneParameterForRequiredMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class ParameterFieldListFactory implements ParameterFieldListFactoryInterface

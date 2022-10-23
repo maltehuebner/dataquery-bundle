@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Factory\ParameterFactory;
+namespace MalteHuebner\DataQueryBundle\Factory\ParameterFactory;
 
-use Maltehuebner\DataQueryBundle\Factory\ValueAssigner\ValueAssignerInterface;
-use Maltehuebner\DataQueryBundle\FieldList\ParameterFieldList\ParameterField;
-use Maltehuebner\DataQueryBundle\FieldList\ParameterFieldList\ParameterFieldListFactoryInterface;
-use Maltehuebner\DataQueryBundle\Manager\ParameterManagerInterface;
-use Maltehuebner\DataQueryBundle\Parameter\ParameterInterface;
-use Maltehuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
+use MalteHuebner\DataQueryBundle\Factory\ValueAssigner\ValueAssignerInterface;
+use MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList\ParameterField;
+use MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList\ParameterFieldListFactoryInterface;
+use MalteHuebner\DataQueryBundle\Manager\ParameterManagerInterface;
+use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ParameterFactory implements ParameterFactoryInterface

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FieldList\ParameterFieldList;
+namespace MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList;
 
-use Maltehuebner\DataQueryBundle\FieldList\AbstractField;
+use MalteHuebner\DataQueryBundle\FieldList\AbstractField;
 
 class ParameterField extends AbstractField
 {

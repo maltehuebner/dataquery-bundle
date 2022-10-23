@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Parameter;
+namespace MalteHuebner\DataQueryBundle\Parameter;
 
-use Maltehuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
-use Maltehuebner\DataQueryBundle\Validator\Constraint\Sortable;
+use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Validator\Constraint\Sortable;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 

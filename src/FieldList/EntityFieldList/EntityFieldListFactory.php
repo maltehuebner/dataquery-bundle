@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FieldList\EntityFieldList;
+namespace MalteHuebner\DataQueryBundle\FieldList\EntityFieldList;
 
-use Maltehuebner\DataQueryBundle\Annotation\AnnotationInterface;
-use Maltehuebner\DataQueryBundle\Annotation\EntityAnnotation\DateTimeQueryable;
-use Maltehuebner\DataQueryBundle\Annotation\EntityAnnotation\DefaultBooleanValue;
-use Maltehuebner\DataQueryBundle\Annotation\EntityAnnotation\Queryable;
-use Maltehuebner\DataQueryBundle\Annotation\EntityAnnotation\Sortable;
-use Maltehuebner\DataQueryBundle\Exception\NoReturnTypeForEntityMethodException;
+use MalteHuebner\DataQueryBundle\Annotation\AnnotationInterface;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\DateTimeQueryable;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\DefaultBooleanValue;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\Queryable;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\Sortable;
+use MalteHuebner\DataQueryBundle\Exception\NoReturnTypeForEntityMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class EntityFieldListFactory implements EntityFieldListFactoryInterface

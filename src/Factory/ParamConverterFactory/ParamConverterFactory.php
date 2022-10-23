@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Factory\ParamConverterFactory;
+namespace MalteHuebner\DataQueryBundle\Factory\ParamConverterFactory;
 
 use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;

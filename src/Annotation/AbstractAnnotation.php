@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Annotation;
+namespace MalteHuebner\DataQueryBundle\Annotation;
 
 abstract class AbstractAnnotation implements AnnotationInterface
 {

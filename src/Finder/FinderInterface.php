@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Finder;
+namespace MalteHuebner\DataQueryBundle\Finder;
 
 interface FinderInterface
 {

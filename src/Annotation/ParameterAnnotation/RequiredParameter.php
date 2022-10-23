@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Annotation\ParameterAnnotation;
+namespace MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation;
 
-use Maltehuebner\DataQueryBundle\Annotation\AbstractAnnotation;
+use MalteHuebner\DataQueryBundle\Annotation\AbstractAnnotation;
 
 /**
  * @Annotation

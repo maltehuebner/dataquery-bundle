@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FinderFactory;
+namespace MalteHuebner\DataQueryBundle\FinderFactory;
 
-use Maltehuebner\DataQueryBundle\Finder\FinderInterface;
+use MalteHuebner\DataQueryBundle\Finder\FinderInterface;
 
 interface FinderFactoryInterface
 {

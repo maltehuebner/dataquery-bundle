@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\Manager;
+namespace MalteHuebner\DataQueryBundle\Manager;
 
-use Maltehuebner\DataQueryBundle\Query\QueryInterface;
+use MalteHuebner\DataQueryBundle\Query\QueryInterface;
 
 class QueryManager implements QueryManagerInterface
 {

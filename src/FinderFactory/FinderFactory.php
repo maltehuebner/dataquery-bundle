@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Maltehuebner\DataQueryBundle\FinderFactory;
+namespace MalteHuebner\DataQueryBundle\FinderFactory;
 
-use Maltehuebner\DataQueryBundle\Finder\Finder;
-use Maltehuebner\DataQueryBundle\Finder\FinderInterface;
+use MalteHuebner\DataQueryBundle\Finder\Finder;
+use MalteHuebner\DataQueryBundle\Finder\FinderInterface;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
 
 class FinderFactory implements FinderFactoryInterface
