@@ -2,19 +2,18 @@
 
 namespace MalteHuebner\DataQueryBundle\Finder;
 
+use FOS\ElasticaBundle\Repository;
 use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\QueryInterface;
-use FOS\ElasticaBundle\Finder\FinderInterface as FOSFinderInterface;
 
 class Finder implements FinderInterface
 {
-    /** @var FOSFinderInterface $elasticFinder */
-    protected $elasticFinder;
+    protected Repository $repository;
 
-    public function __construct(FOSFinderInterface $elasticFinder)
+    public function __construct(Repository $repository)
     {
-        $this->elasticFinder = $elasticFinder;
+        $this->repository = $repository;
     }
 
     public function executeQuery(array $queryList, array $parameterList): array
@@ -44,7 +43,7 @@ class Finder implements FinderInterface
 
         //dump(json_encode($query->toArray()));
 
-        return $this->elasticFinder->find($query);
+        return $this->repository->find($query);
     }
 
     protected function executeOrmQuery(array $queryList): array
