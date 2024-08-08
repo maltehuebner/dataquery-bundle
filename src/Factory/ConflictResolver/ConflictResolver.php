@@ -21,7 +21,6 @@ class ConflictResolver
 
                 if (array_key_exists($overridingQueryName, $queryList)) {
                     unset($queryList[$queryName]);
-                    continue;
                 }
             }
         }
