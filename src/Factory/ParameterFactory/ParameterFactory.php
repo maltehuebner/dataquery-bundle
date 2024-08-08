@@ -50,7 +50,7 @@ class ParameterFactory implements ParameterFactoryInterface
 
     protected function checkForParameter(string $queryFqcn, RequestParameterList $requestParameterList): ?ParameterInterface
     {
-        $parameterFieldList = $this->parameterListFactory->createForFqcn($queryFqcn);
+        $parameterFieldList = $this->parameterFieldListFactory->createForFqcn($queryFqcn);
 
         /** @var ParameterInterface $parameter */
         $parameter = new $queryFqcn();
