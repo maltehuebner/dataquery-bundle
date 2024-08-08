@@ -6,23 +6,17 @@ use MalteHuebner\DataQueryBundle\FieldList\AbstractField;
 
 class EntityField extends AbstractField
 {
-    /** @var bool $queryable */
-    protected $queryable = false;
+    private bool $queryable = false;
 
-    /** @var bool $sortable */
-    protected $sortable = false;
+    private bool $sortable = false;
 
-    /** @var bool $defaultQueryBoolValue */
-    protected $defaultQueryBoolValue = false;
+    private bool $defaultQueryBoolValue = false;
 
-    /** @var bool $defaultQueryBool */
-    protected $defaultQueryBool = false;
+    private bool $defaultQueryBool = false;
 
-    /** @var string $dateTimeFormat */
-    protected $dateTimeFormat;
+    private string $dateTimeFormat;
 
-    /** @var string $dateTimePattern */
-    protected $dateTimePattern;
+    private string $dateTimePattern;
 
     public function isQueryable(): bool
     {

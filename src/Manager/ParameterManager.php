@@ -6,8 +6,7 @@ use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
 
 class ParameterManager implements ParameterManagerInterface
 {
-    /** @var array $parameterList */
-    protected $parameterList = [];
+    private array $parameterList = [];
 
     #[\Override]
     public function addParameter(ParameterInterface $parameter): ParameterManagerInterface

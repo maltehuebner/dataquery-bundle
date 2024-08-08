@@ -6,8 +6,7 @@ use MalteHuebner\DataQueryBundle\Query\QueryInterface;
 
 class QueryManager implements QueryManagerInterface
 {
-    /** @var array $queryList */
-    protected $queryList = [];
+    private array $queryList = [];
 
     #[\Override]
     public function addQuery(QueryInterface $query): QueryManagerInterface

@@ -13,9 +13,8 @@ class UntilDateTimeQuery extends AbstractDateTimeQuery
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("int")
-     * @var int $untilDateTime
      */
-    protected $untilDateTime;
+    private int $untilDateTime;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="untilDateTime")

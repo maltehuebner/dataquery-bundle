@@ -14,9 +14,8 @@ class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, Elast
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("App\Entity\Region")
-     * @var Region $region
      */
-    protected $region;
+    private Region $region;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="regionSlug")

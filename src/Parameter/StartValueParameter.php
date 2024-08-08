@@ -10,14 +10,13 @@ class StartValueParameter extends OrderParameter
 {
     /**
      * @Constraints\NotNull()
-     * @var $startValue
      */
-    protected $startValue;
+    private mixed $startValue;
 
     /**
      * @DataQuery\RequiredParameter(parameterName="startValue")
      */
-    public function setStartValue($startValue): StartValueParameter
+    public function setStartValue(mixed $startValue): StartValueParameter
     {
         $this->startValue = $startValue;
 

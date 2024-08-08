@@ -12,12 +12,10 @@ use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class EntityFieldListFactory implements EntityFieldListFactoryInterface
 {
+    private string $entityFqcn;
 
-    /** @var string $entityFqcn */
-    protected $entityFqcn;
+    private EntityFieldList $entityFieldList;
 
-    /** @var EntityFieldList $entityFieldList */
-    protected $entityFieldList;
     public function __construct(
         private readonly AnnotationReader $annotationReader
     ) {

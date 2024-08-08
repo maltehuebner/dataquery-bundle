@@ -14,17 +14,15 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="-90", max="90")
-     * @var float $centerLatitude
      */
-    protected $centerLatitude;
+    private float $centerLatitude;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="-180", max="180")
-     * @var float $centerLongitude
      */
-    protected $centerLongitude;
+    private float $centerLongitude;
 
     /**
      * @Constraints\NotNull()
@@ -32,7 +30,7 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
      * @Constraints\Range(min="0", max="50000")
      * @var float $radius
      */
-    protected $radius;
+    private float $radius;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="centerLatitude")

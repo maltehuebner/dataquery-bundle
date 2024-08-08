@@ -11,24 +11,21 @@ class OrderDistanceParameter extends AbstractParameter
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
-     * @var float $latitude
      */
-    protected $latitude;
+    private float $latitude;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
-     * @var float $longitude
      */
-    protected $longitude;
+    private float $longitude;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("string")
      * @Constraints\Choice(choices = {"ASC", "DESC"})
-     * @var string $direction
      */
-    protected $direction;
+    private string $direction;
 
     /**
      * @DataQuery\RequiredParameter(parameterName="centerLatitude")

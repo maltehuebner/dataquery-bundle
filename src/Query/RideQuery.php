@@ -14,9 +14,8 @@ class RideQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("App\Entity\Ride")
-     * @var Ride $ride
      */
-    protected $ride;
+    private Ride $ride;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="rideIdentifier")

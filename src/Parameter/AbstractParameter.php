@@ -4,8 +4,7 @@ namespace MalteHuebner\DataQueryBundle\Parameter;
 
 abstract class AbstractParameter implements ParameterInterface
 {
-    /** @var string $entityFqcn */
-    protected $entityFqcn;
+    protected string $entityFqcn;
 
     #[\Override]
     public function setEntityFqcn(string $entityFqcn): ParameterInterface

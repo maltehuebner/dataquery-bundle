@@ -15,9 +15,8 @@ class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, 
      * @Constraints\NotNull()
      * @Constraints\GreaterThanOrEqual(value="1990")
      * @Constraints\Type("int")
-     * @var int $year
      */
-    protected $year;
+    protected int $year;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="year")

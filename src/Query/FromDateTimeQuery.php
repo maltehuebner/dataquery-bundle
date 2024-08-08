@@ -13,9 +13,8 @@ class FromDateTimeQuery extends AbstractDateTimeQuery
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("int")
-     * @var int $fromDateTime
      */
-    protected $fromDateTime;
+    private int $fromDateTime;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="fromDateTime")
