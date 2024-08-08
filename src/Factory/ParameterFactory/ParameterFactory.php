@@ -12,27 +12,15 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ParameterFactory implements ParameterFactoryInterface
 {
-    /** @var string $entityFqcn */
-    protected $entityFqcn;
+    protected string $entityFqcn;
 
-    /** @var ParameterManagerInterface $parameterManager */
-    protected $parameterManager;
+    public function __construct(
+        private readonly ParameterManagerInterface $parameterManager,
+        private readonly ValueAssignerInterface $valueAssigner,
+        private readonly ValidatorInterface $validator,
+        private readonly ParameterFieldListFactoryInterface $parameterFieldListFactory
+    ) {
 
-    /** @var ValueAssignerInterface $valueAssigner */
-    protected $valueAssigner;
-
-    /** @var ValidatorInterface $validator */
-    protected $validator;
-
-    /** @var ParameterFieldListFactoryInterface */
-    protected $parameterListFactory;
-
-    public function __construct(ParameterManagerInterface $parameterManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, ParameterFieldListFactoryInterface $parameterFieldListFactory)
-    {
-        $this->parameterManager = $parameterManager;
-        $this->valueAssigner = $valueAssigner;
-        $this->validator = $validator;
-        $this->parameterListFactory = $parameterFieldListFactory;
     }
 
     #[\Override]

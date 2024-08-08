@@ -9,8 +9,10 @@ use MalteHuebner\DataQueryBundle\Query\QueryInterface;
 
 class Finder implements FinderInterface
 {
-    public function __construct(protected Repository $repository)
-    {
+    public function __construct(
+        private readonly Repository $repository
+    ) {
+
     }
 
     #[\Override]

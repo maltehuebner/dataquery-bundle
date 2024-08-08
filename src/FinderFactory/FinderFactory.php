@@ -10,8 +10,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FinderFactory implements FinderFactoryInterface
 {
-    public function __construct(protected ContainerInterface $container, protected RepositoryManagerInterface $repositoryManager)
-    {
+    public function __construct(
+        private readonly RepositoryManagerInterface $repositoryManager
+    ) {
+
     }
 
     #[\Override]

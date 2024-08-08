@@ -20,35 +20,16 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class QueryFactory implements QueryFactoryInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    private string $entityFqcn;
 
-    /** @var string $entityFqcn */
-    protected $entityFqcn;
+    public function __construct(
+        private readonly QueryManagerInterface $queryManager,
+        private readonly ValueAssignerInterface $valueAssigner,
+        private readonly ValidatorInterface $validator,
+        private readonly EntityFieldListFactoryInterface $entityFieldListFactory,
+        private readonly QueryFieldListFactoryInterface $queryFieldListFactory
+    ) {
 
-    /** @var QueryManagerInterface $queryManager */
-    protected $queryManager;
-
-    /** @var ValueAssignerInterface $valueAssignerInterface */
-    protected $valueAssigner;
-
-    /** @var ValidatorInterface $validator */
-    protected $validator;
-
-    /** @var EntityFieldListFactoryInterface $entityFieldListFactory */
-    protected $entityFieldListFactory;
-
-    /** @var QueryFieldListFactoryInterface $queryFieldListFactory */
-    protected $queryFieldListFactory;
-
-    public function __construct(ManagerRegistry $registry, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory, QueryFieldListFactoryInterface $queryFieldListFactory)
-    {
-        $this->registry = $registry;
-        $this->queryManager = $queryManager;
-        $this->valueAssigner = $valueAssigner;
-        $this->validator = $validator;
-        $this->entityFieldListFactory = $entityFieldListFactory;
-        $this->queryFieldListFactory = $queryFieldListFactory;
     }
 
     #[\Override]

@@ -11,12 +11,10 @@ class ParamConverterFactory implements ParamConverterFactoryInterface
     public const PARAMCONVERTER_NAMESPACE = 'App\\Request\\ParamConverter\\';
     public const PARAMCONVERTER_SUFFIX = 'ParamConverter';
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    public function __construct(
+        private ManagerRegistry $registry
+    ) {
 
-    public function __construct(ManagerRegistry $registry)
-    {
-        $this->registry = $registry;
     }
 
     #[\Override]

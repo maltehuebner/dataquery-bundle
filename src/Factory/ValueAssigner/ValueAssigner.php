@@ -15,12 +15,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ValueAssigner implements ValueAssignerInterface
 {
-    /** @var ParamConverterFactoryInterface $paramConverterFactory */
-    protected $paramConverterFactory;
-
-    public function __construct(ParamConverterFactoryInterface $paramConverterFactory)
+    public function __construct(private readonly ParamConverterFactoryInterface $paramConverterFactory)
     {
-        $this->paramConverterFactory = $paramConverterFactory;
+
     }
 
     #[\Override]
