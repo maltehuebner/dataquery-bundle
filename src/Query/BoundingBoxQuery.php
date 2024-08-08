@@ -16,33 +16,29 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="-90", max="90")
-     * @var float $northLatitude
      */
-    protected $northLatitude;
+    private float $northLatitude;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="-90", max="90")
-     * @var float $southLatitude
      */
-    protected $southLatitude;
+    private float $southLatitude;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="-180", max="180")
-     * @var float $eastLongitude
      */
-    protected $eastLongitude;
+    private float $eastLongitude;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="-180", max="180")
-     * @var float $westLongitude
      */
-    protected $westLongitude;
+    private float $westLongitude;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="bbNorthLatitude")
@@ -124,6 +120,7 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
         return $this->westLongitude !== null;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $geoQuery = new \Elastica\Query\GeoBoundingBox('pin',

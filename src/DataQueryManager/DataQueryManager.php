@@ -9,22 +9,15 @@ use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 
 class DataQueryManager implements DataQueryManagerInterface
 {
-    /** @var QueryFactoryInterface $queryFactory */
-    protected $queryFactory;
+    public function __construct(
+        private readonly QueryFactoryInterface $queryFactory,
+        private readonly ParameterFactoryInterface $parameterFactory,
+        private readonly FinderFactoryInterface $finderFactory
+    ) {
 
-    /** @var ParameterFactoryInterface $parameterFactory */
-    protected $parameterFactory;
-
-    /** @var FinderFactoryInterface $finderFactory */
-    protected $finderFactory;
-
-    public function __construct(QueryFactoryInterface $queryFactory, ParameterFactoryInterface $parameterFactory, FinderFactoryInterface $finderFactory)
-    {
-        $this->queryFactory = $queryFactory;
-        $this->parameterFactory = $parameterFactory;
-        $this->finderFactory = $finderFactory;
     }
     
+    #[\Override]
     public function query(RequestParameterList $requestParameterList, string $entityFqcn): array
     {
         $queryList = $this->queryFactory->setEntityFqcn($entityFqcn)->createFromList($requestParameterList);

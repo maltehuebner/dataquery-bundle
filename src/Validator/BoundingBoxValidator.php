@@ -11,6 +11,7 @@ class BoundingBoxValidator extends ConstraintValidator
     /**
      * @var BoundingBoxQuery $boundingBoxQuery
      */
+    #[\Override]
     public function validate($boundingBoxQuery, Constraint $constraint): void
     {
         if (!$boundingBoxQuery->hasNorthLatitude() || !$boundingBoxQuery->hasSouthLatitude() || !$boundingBoxQuery->hasWestLongitude() || !$boundingBoxQuery->hasEastLongitude()) {

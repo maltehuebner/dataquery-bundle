@@ -10,15 +10,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FinderFactory implements FinderFactoryInterface
 {
-    protected ContainerInterface $container;
-    protected RepositoryManagerInterface $repositoryManager;
+    public function __construct(
+        private readonly RepositoryManagerInterface $repositoryManager
+    ) {
 
-    public function __construct(ContainerInterface $container, RepositoryManagerInterface $repositoryManager)
-    {
-        $this->repositoryManager = $repositoryManager;
-        $this->container = $container;
     }
 
+    #[\Override]
     public function createFinderForFqcn(string $fqcn): FinderInterface
     {
         $reflectionClass = new \ReflectionClass($fqcn);

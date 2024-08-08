@@ -13,7 +13,7 @@ class RideTypeQuery extends AbstractQuery implements DoctrineQueryInterface, Ela
     /**
      * @Constraints\NotNull()
      */
-    protected string $rideType;
+    private string $rideType;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="rideType")
@@ -30,6 +30,7 @@ class RideTypeQuery extends AbstractQuery implements DoctrineQueryInterface, Ela
         return $this->rideType;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return new \Elastica\Query\Term(['rideType' => strtoupper($this->rideType)]);

@@ -12,9 +12,8 @@ class SizeParameter extends AbstractParameter
      * @Constraints\NotNull()
      * @Constraints\Type("int")
      * @Constraints\Range(min="1", max="500")
-     * @var int $size
      */
-    protected $size;
+    protected int $size;
 
     /**
      * @DataQuery\RequiredParameter(parameterName="size")
@@ -26,6 +25,7 @@ class SizeParameter extends AbstractParameter
         return $this;
     }
 
+    #[\Override]
     public function addToElasticQuery(Query $query): Query
     {
         return $query->setSize($this->size);

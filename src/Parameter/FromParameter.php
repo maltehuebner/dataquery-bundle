@@ -12,9 +12,8 @@ class FromParameter extends AbstractParameter
      * @Constraints\NotNull()
      * @Constraints\Type("int")
      * @Constraints\Range(min="0")
-     * @var int $from
      */
-    protected $from;
+    private int $from;
 
     /**
      * @DataQuery\RequiredParameter(parameterName="from")
@@ -26,6 +25,7 @@ class FromParameter extends AbstractParameter
         return $this;
     }
 
+    #[\Override]
     public function addToElasticQuery(Query $query): Query
     {
         return $query->setFrom($this->from);

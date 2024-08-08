@@ -4,8 +4,7 @@ namespace MalteHuebner\DataQueryBundle\RequestParameterList;
 
 class RequestParameterList
 {
-    /** @var array $list */
-    protected $list = [];
+    private array $list = [];
 
     public function add(string $key, string $value): RequestParameterList
     {

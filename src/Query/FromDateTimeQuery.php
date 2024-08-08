@@ -13,9 +13,8 @@ class FromDateTimeQuery extends AbstractDateTimeQuery
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("int")
-     * @var int $fromDateTime
      */
-    protected $fromDateTime;
+    private int $fromDateTime;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="fromDateTime")
@@ -42,6 +41,7 @@ class FromDateTimeQuery extends AbstractDateTimeQuery
         return new \DateTime(sprintf('@%d', $this->fromDateTime));
     }
 
+    #[\Override]
     public function isOverridenBy(): array
     {
         return [];

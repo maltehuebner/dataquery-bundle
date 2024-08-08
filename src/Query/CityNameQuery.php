@@ -30,6 +30,7 @@ class CityNameQuery extends AbstractQuery implements DoctrineQueryInterface, Ela
         return $this->name;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return new \Elastica\Query\Term(['city' => $this->name]);

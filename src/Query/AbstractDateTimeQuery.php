@@ -9,24 +9,22 @@ abstract class AbstractDateTimeQuery extends AbstractQuery implements DateTimeQu
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("string")
-     * @var string $dateTimePattern
      */
-    protected $dateTimePattern;
+    protected string $dateTimePattern;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("string")
-     * @var string $dateTimeFormat
      */
-    protected $dateTimeFormat;
+    protected string $dateTimeFormat;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("string")
-     * @var string $propertyName
      */
-    protected $propertyName;
+    protected string $propertyName;
 
+    #[\Override]
     public function setDateTimePattern(string $dateTimePattern): DateTimeQueryInterface
     {
         $this->dateTimePattern = $dateTimePattern;
@@ -34,6 +32,7 @@ abstract class AbstractDateTimeQuery extends AbstractQuery implements DateTimeQu
         return $this;
     }
 
+    #[\Override]
     public function setDateTimeFormat(string $dateTimeFormat): DateTimeQueryInterface
     {
         $this->dateTimeFormat = $dateTimeFormat;
@@ -41,6 +40,7 @@ abstract class AbstractDateTimeQuery extends AbstractQuery implements DateTimeQu
         return $this;
     }
 
+    #[\Override]
     public function setPropertyName(string $propertyName): DateTimeQueryInterface
     {
         $this->propertyName = $propertyName;

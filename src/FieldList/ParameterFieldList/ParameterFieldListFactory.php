@@ -9,20 +9,18 @@ use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
 {
-    /** @var AnnotationReader $annotationReader */
-    protected $annotationReader;
+    private string $parameterFqcn;
 
-    /** @var string $parameterFqcn */
-    protected $parameterFqcn;
+    protected ParameterFieldList $parameterFieldList;
 
-    /** @var ParameterFieldList $parameterFieldList */
-    protected $parameterFieldList;
-
-    public function __construct(AnnotationReader $annotationReader)
+    public function __construct(
+        private readonly AnnotationReader $annotationReader
+    )
     {
-        $this->annotationReader = $annotationReader;
+
     }
 
+    #[\Override]
     public function createForFqcn(string $parameterFqcn): ParameterFieldList
     {
         $this->parameterFieldList = new ParameterFieldList();

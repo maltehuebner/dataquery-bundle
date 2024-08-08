@@ -12,11 +12,13 @@ class Sortable extends Constraint
 {
     public $message = 'Target field {{ entityTargetPropertyName }} of class {{ entityFqcn }} ist not sortable';
 
+    #[\Override]
     public function getTargets(): string
     {
         return self::PROPERTY_CONSTRAINT;
     }
 
+    #[\Override]
     public function validatedBy(): string
     {
         return SortableValidator::class;

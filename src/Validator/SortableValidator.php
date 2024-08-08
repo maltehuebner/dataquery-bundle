@@ -11,14 +11,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class SortableValidator extends ConstraintValidator
 {
-    /** @var EntityFieldListFactoryInterface $entityFieldListFactory */
-    protected $entityFieldListFactory;
-
-    public function __construct(EntityFieldListFactoryInterface $entityFieldListFactory)
+    public function __construct(
+        private readonly EntityFieldListFactoryInterface $entityFieldListFactory
+    )
     {
-        $this->entityFieldListFactory = $entityFieldListFactory;
+
     }
 
+    #[\Override]
     public function validate($entityTargetPropertyName, Constraint $constraint): void
     {
         if (!$entityTargetPropertyName) {

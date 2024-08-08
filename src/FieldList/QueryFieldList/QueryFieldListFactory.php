@@ -23,6 +23,7 @@ class QueryFieldListFactory implements QueryFieldListFactoryInterface
         $this->annotationReader = $annotationReader;
     }
 
+    #[\Override]
     public function createForFqcn(string $queryFqcn): QueryFieldList
     {
         $this->queryFieldList = new QueryFieldList();

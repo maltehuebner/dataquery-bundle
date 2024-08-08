@@ -13,17 +13,15 @@ class OrderParameter extends AbstractParameter implements PropertyTargetingParam
      * @Constraints\NotNull()
      * @Constraints\Type("string")
      * @Sortable
-     * @var string $propertyName
      */
-    protected $propertyName;
+    private string $propertyName;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("string")
      * @Constraints\Choice(choices = {"ASC", "DESC"})
-     * @var string $direction
      */
-    protected $direction;
+    protected string $direction;
 
     /**
      * @DataQuery\RequiredParameter(parameterName="orderBy")
@@ -35,6 +33,7 @@ class OrderParameter extends AbstractParameter implements PropertyTargetingParam
         return $this;
     }
 
+    #[\Override]
     public function getPropertyName(): string
     {
         return $this->propertyName;
@@ -50,6 +49,7 @@ class OrderParameter extends AbstractParameter implements PropertyTargetingParam
         return $this;
     }
 
+    #[\Override]
     public function addToElasticQuery(Query $query): Query
     {
         return $query->addSort([$this->propertyName => ['order' => $this->direction]]);

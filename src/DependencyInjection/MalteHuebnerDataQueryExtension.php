@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 
 class MalteHuebnerDataQueryExtension extends Extension
 {
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration(false);

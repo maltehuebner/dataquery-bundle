@@ -20,37 +20,19 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class QueryFactory implements QueryFactoryInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    private string $entityFqcn;
 
-    /** @var string $entityFqcn */
-    protected $entityFqcn;
+    public function __construct(
+        private readonly QueryManagerInterface $queryManager,
+        private readonly ValueAssignerInterface $valueAssigner,
+        private readonly ValidatorInterface $validator,
+        private readonly EntityFieldListFactoryInterface $entityFieldListFactory,
+        private readonly QueryFieldListFactoryInterface $queryFieldListFactory
+    ) {
 
-    /** @var QueryManagerInterface $queryManager */
-    protected $queryManager;
-
-    /** @var ValueAssignerInterface $valueAssignerInterface */
-    protected $valueAssigner;
-
-    /** @var ValidatorInterface $validator */
-    protected $validator;
-
-    /** @var EntityFieldListFactoryInterface $entityFieldListFactory */
-    protected $entityFieldListFactory;
-
-    /** @var QueryFieldListFactoryInterface $queryFieldListFactory */
-    protected $queryFieldListFactory;
-
-    public function __construct(ManagerRegistry $registry, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory, QueryFieldListFactoryInterface $queryFieldListFactory)
-    {
-        $this->registry = $registry;
-        $this->queryManager = $queryManager;
-        $this->valueAssigner = $valueAssigner;
-        $this->validator = $validator;
-        $this->entityFieldListFactory = $entityFieldListFactory;
-        $this->queryFieldListFactory = $queryFieldListFactory;
     }
 
+    #[\Override]
     public function setEntityFqcn(string $entityFqcn): QueryFactoryInterface
     {
         $this->entityFqcn = $entityFqcn;
@@ -58,13 +40,14 @@ class QueryFactory implements QueryFactoryInterface
         return $this;
     }
 
+    #[\Override]
     public function createFromList(RequestParameterList $requestParameterList): array
     {
         $queryList = $this->findEntityDefaultValuesAsQuery();
 
         /** @var QueryInterface $queryCandidate */
         foreach ($this->queryManager->getQueryList() as $queryCandidate) {
-            $query = $this->checkForQuery(get_class($queryCandidate), $requestParameterList);
+            $query = $this->checkForQuery($queryCandidate::class, $requestParameterList);
 
             if ($query) {
                 $queryList[ClassUtil::getShortname($query)] = $query;

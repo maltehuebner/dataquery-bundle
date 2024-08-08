@@ -8,17 +8,16 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class ParamConverterFactory implements ParamConverterFactoryInterface
 {
-    const PARAMCONVERTER_NAMESPACE = 'App\\Request\\ParamConverter\\';
-    const PARAMCONVERTER_SUFFIX = 'ParamConverter';
+    private const string PARAMCONVERTER_NAMESPACE = 'App\\Request\\ParamConverter\\';
+    private const string PARAMCONVERTER_SUFFIX = 'ParamConverter';
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    public function __construct(
+        private ManagerRegistry $registry
+    ) {
 
-    public function __construct(ManagerRegistry $registry)
-    {
-        $this->registry = $registry;
     }
 
+    #[\Override]
     public function createParamConverter(string $fqcn): ?ParamConverterInterface
     {
         $entityShortname = ClassUtil::getShortnameFromFqcn($fqcn);

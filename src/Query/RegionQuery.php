@@ -14,9 +14,8 @@ class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, Elast
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("App\Entity\Region")
-     * @var Region $region
      */
-    protected $region;
+    private Region $region;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="regionSlug")
@@ -33,6 +32,7 @@ class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, Elast
         return $this->region;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $regionQuery = new \Elastica\Query\BoolQuery();

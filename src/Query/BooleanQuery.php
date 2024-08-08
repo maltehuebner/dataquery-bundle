@@ -7,18 +7,16 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class BooleanQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     /**
-     * @var string $propertyName
      * @Constraints\NotNull()
      * @Constraints\Type("string")
      */
-    protected $propertyName;
+    protected string $propertyName;
 
     /**
-     * @var bool $value
      * @Constraints\NotNull()
      * @Constraints\Type("boolean")
      */
-    protected $value = false;
+    protected bool $value = false;
 
     public function setPropertyName(string $propertyName): BooleanQuery
     {
@@ -44,6 +42,7 @@ class BooleanQuery extends AbstractQuery implements DoctrineQueryInterface, Elas
         return $this->value;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return new \Elastica\Query\Term([$this->propertyName => $this->value]);

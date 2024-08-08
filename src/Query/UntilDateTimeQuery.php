@@ -13,9 +13,8 @@ class UntilDateTimeQuery extends AbstractDateTimeQuery
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("int")
-     * @var int $untilDateTime
      */
-    protected $untilDateTime;
+    private int $untilDateTime;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="untilDateTime")
@@ -42,6 +41,7 @@ class UntilDateTimeQuery extends AbstractDateTimeQuery
         return new \DateTime(sprintf('@%d', $this->untilDateTime));
     }
 
+    #[\Override]
     public function isOverridenBy(): array
     {
         return [];

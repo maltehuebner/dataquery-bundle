@@ -15,9 +15,8 @@ class DateQuery extends MonthQuery
      * @Constraints\NotNull()
      * @Constraints\Range(min="1", max="31")
      * @Constraints\Type("int")
-     * @var int $day
      */
-    protected $day;
+    private $day;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="day")
@@ -29,6 +28,7 @@ class DateQuery extends MonthQuery
         return $this;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $fromDateTime = DateTimeUtil::getDayStartDateTime($this->toDateTime());
@@ -43,11 +43,13 @@ class DateQuery extends MonthQuery
         return $dateTimeQuery;
     }
 
+    #[\Override]
     protected function toDateTime(): \DateTime
     {
         return new \DateTime(sprintf('%d-%d-%d 00:00:00', $this->year, $this->month, $this->day));
     }
 
+    #[\Override]
     public function isOverridenBy(): array
     {
         return [];

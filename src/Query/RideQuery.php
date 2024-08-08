@@ -14,9 +14,8 @@ class RideQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("App\Entity\Ride")
-     * @var Ride $ride
      */
-    protected $ride;
+    private Ride $ride;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="rideIdentifier")
@@ -33,6 +32,7 @@ class RideQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
         return $this->ride;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return new \Elastica\Query\Term(['rideId' => $this->getRide()->getId()]);

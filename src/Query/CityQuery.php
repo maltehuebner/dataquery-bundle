@@ -14,9 +14,8 @@ class CityQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("App\Entity\City")
-     * @var City $city
      */
-    protected $city;
+    private City $city;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="citySlug")
@@ -33,11 +32,13 @@ class CityQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
         return $this->city;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return new \Elastica\Query\Term(['city' => $this->city->getCity()]);
     }
 
+    #[\Override]
     public function isOverridenBy(): array
     {
         return [

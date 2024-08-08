@@ -12,29 +12,18 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ParameterFactory implements ParameterFactoryInterface
 {
-    /** @var string $entityFqcn */
-    protected $entityFqcn;
+    protected string $entityFqcn;
 
-    /** @var ParameterManagerInterface $parameterManager */
-    protected $parameterManager;
+    public function __construct(
+        private readonly ParameterManagerInterface $parameterManager,
+        private readonly ValueAssignerInterface $valueAssigner,
+        private readonly ValidatorInterface $validator,
+        private readonly ParameterFieldListFactoryInterface $parameterFieldListFactory
+    ) {
 
-    /** @var ValueAssignerInterface $valueAssigner */
-    protected $valueAssigner;
-
-    /** @var ValidatorInterface $validator */
-    protected $validator;
-
-    /** @var ParameterFieldListFactoryInterface */
-    protected $parameterListFactory;
-
-    public function __construct(ParameterManagerInterface $parameterManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, ParameterFieldListFactoryInterface $parameterFieldListFactory)
-    {
-        $this->parameterManager = $parameterManager;
-        $this->valueAssigner = $valueAssigner;
-        $this->validator = $validator;
-        $this->parameterListFactory = $parameterFieldListFactory;
     }
 
+    #[\Override]
     public function setEntityFqcn(string $entityFqcn): ParameterFactoryInterface
     {
         $this->entityFqcn = $entityFqcn;
@@ -42,13 +31,14 @@ class ParameterFactory implements ParameterFactoryInterface
         return $this;
     }
 
+    #[\Override]
     public function createFromList(RequestParameterList $requestParameterList): array
     {
         $parameterList = [];
 
         /** @var ParameterInterface $parameter */
         foreach ($this->parameterManager->getParameterList() as $parameterCandidate) {
-            $parameter = $this->checkForParameter(get_class($parameterCandidate), $requestParameterList);
+            $parameter = $this->checkForParameter($parameterCandidate::class, $requestParameterList);
 
             if ($parameter) {
                 $parameterList[] = $parameter;
@@ -60,7 +50,7 @@ class ParameterFactory implements ParameterFactoryInterface
 
     protected function checkForParameter(string $queryFqcn, RequestParameterList $requestParameterList): ?ParameterInterface
     {
-        $parameterFieldList = $this->parameterListFactory->createForFqcn($queryFqcn);
+        $parameterFieldList = $this->parameterFieldListFactory->createForFqcn($queryFqcn);
 
         /** @var ParameterInterface $parameter */
         $parameter = new $queryFqcn();

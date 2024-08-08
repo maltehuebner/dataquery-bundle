@@ -6,17 +6,10 @@ use MalteHuebner\DataQueryBundle\FieldList\AbstractField;
 
 class ParameterField extends AbstractField
 {
-    /** @var string $parameterName */
-    protected $parameterName;
-
-    /** @var bool $requiresQueryable */
-    protected $requiresQueryable = false;
-
-    /** @var string $dateTimeFormat */
-    protected $dateTimeFormat;
-
-    /** @var string $dateTimePattern */
-    protected $dateTimePattern;
+    private string $parameterName;
+    private bool $requiresQueryable = false;
+    private string $dateTimeFormat;
+    private string $dateTimePattern;
 
     public function hasParameterName(): bool
     {
