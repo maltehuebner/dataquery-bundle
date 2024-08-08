@@ -23,6 +23,7 @@ class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
         $this->annotationReader = $annotationReader;
     }
 
+    #[\Override]
     public function createForFqcn(string $parameterFqcn): ParameterFieldList
     {
         $this->parameterFieldList = new ParameterFieldList();

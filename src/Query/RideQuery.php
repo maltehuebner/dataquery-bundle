@@ -33,6 +33,7 @@ class RideQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
         return $this->ride;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return new \Elastica\Query\Term(['rideId' => $this->getRide()->getId()]);

@@ -51,6 +51,7 @@ class QueryFactory implements QueryFactoryInterface
         $this->queryFieldListFactory = $queryFieldListFactory;
     }
 
+    #[\Override]
     public function setEntityFqcn(string $entityFqcn): QueryFactoryInterface
     {
         $this->entityFqcn = $entityFqcn;
@@ -58,13 +59,14 @@ class QueryFactory implements QueryFactoryInterface
         return $this;
     }
 
+    #[\Override]
     public function createFromList(RequestParameterList $requestParameterList): array
     {
         $queryList = $this->findEntityDefaultValuesAsQuery();
 
         /** @var QueryInterface $queryCandidate */
         foreach ($this->queryManager->getQueryList() as $queryCandidate) {
-            $query = $this->checkForQuery(get_class($queryCandidate), $requestParameterList);
+            $query = $this->checkForQuery($queryCandidate::class, $requestParameterList);
 
             if ($query) {
                 $queryList[ClassUtil::getShortname($query)] = $query;

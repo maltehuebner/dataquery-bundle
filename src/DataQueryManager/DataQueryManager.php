@@ -25,6 +25,7 @@ class DataQueryManager implements DataQueryManagerInterface
         $this->finderFactory = $finderFactory;
     }
     
+    #[\Override]
     public function query(RequestParameterList $requestParameterList, string $entityFqcn): array
     {
         $queryList = $this->queryFactory->setEntityFqcn($entityFqcn)->createFromList($requestParameterList);

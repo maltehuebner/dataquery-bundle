@@ -33,6 +33,7 @@ class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, Elast
         return $this->region;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $regionQuery = new \Elastica\Query\BoolQuery();

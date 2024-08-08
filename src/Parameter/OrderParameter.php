@@ -35,6 +35,7 @@ class OrderParameter extends AbstractParameter implements PropertyTargetingParam
         return $this;
     }
 
+    #[\Override]
     public function getPropertyName(): string
     {
         return $this->propertyName;
@@ -50,6 +51,7 @@ class OrderParameter extends AbstractParameter implements PropertyTargetingParam
         return $this;
     }
 
+    #[\Override]
     public function addToElasticQuery(Query $query): Query
     {
         return $query->addSort([$this->propertyName => ['order' => $this->direction]]);

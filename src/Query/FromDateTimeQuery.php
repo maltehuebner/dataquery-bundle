@@ -42,6 +42,7 @@ class FromDateTimeQuery extends AbstractDateTimeQuery
         return new \DateTime(sprintf('@%d', $this->fromDateTime));
     }
 
+    #[\Override]
     public function isOverridenBy(): array
     {
         return [];

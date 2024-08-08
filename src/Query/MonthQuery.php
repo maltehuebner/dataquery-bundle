@@ -29,6 +29,7 @@ class MonthQuery extends YearQuery
         return $this;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $fromDateTime = DateTimeUtil::getMonthStartDateTime($this->toDateTime());
@@ -43,11 +44,13 @@ class MonthQuery extends YearQuery
         return $dateTimeQuery;
     }
 
+    #[\Override]
     protected function toDateTime(): \DateTime
     {
         return new \DateTime(sprintf('%d-%d-01 00:00:00', $this->year, $this->month));
     }
 
+    #[\Override]
     public function isOverridenBy(): array
     {
         return [DateQuery::class];

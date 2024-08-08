@@ -4,6 +4,7 @@ namespace MalteHuebner\DataQueryBundle\Query;
 
 abstract class AbstractQuery implements QueryInterface
 {
+    #[\Override]
     public function isOverridenBy(): array
     {
         return [];

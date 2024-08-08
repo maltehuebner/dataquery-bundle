@@ -26,6 +26,7 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
         $this->annotationReader = $annotationReader;
     }
 
+    #[\Override]
     public function createForFqcn(string $entityFqcn): EntityFieldList
     {
         $this->entityFieldList = new EntityFieldList();

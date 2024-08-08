@@ -12,11 +12,13 @@ class BoundingBoxValues extends Constraint
 {
     public $message = 'Invalid values for Bounding Box Query.';
 
+    #[\Override]
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }
 
+    #[\Override]
     public function validatedBy(): string
     {
         return BoundingBoxValidator::class;

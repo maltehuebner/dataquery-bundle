@@ -26,6 +26,7 @@ class FromParameter extends AbstractParameter
         return $this;
     }
 
+    #[\Override]
     public function addToElasticQuery(Query $query): Query
     {
         return $query->setFrom($this->from);

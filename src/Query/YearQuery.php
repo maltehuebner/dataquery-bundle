@@ -29,6 +29,7 @@ class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, 
         return $this;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $fromDateTime = DateTimeUtil::getYearStartDateTime($this->toDateTime());
@@ -48,6 +49,7 @@ class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, 
         return new \DateTime(sprintf('%d-01-01 00:00:00', $this->year));
     }
 
+    #[\Override]
     public function isOverridenBy(): array
     {
         return [

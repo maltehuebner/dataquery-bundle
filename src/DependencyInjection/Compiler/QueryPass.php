@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class QueryPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         if (!$container->has(QueryManagerInterface::class)) {

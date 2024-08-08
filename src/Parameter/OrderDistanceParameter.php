@@ -60,6 +60,7 @@ class OrderDistanceParameter extends AbstractParameter
         return $this;
     }
 
+    #[\Override]
     public function addToElasticQuery(Query $query): Query
     {
         $query->addSort([

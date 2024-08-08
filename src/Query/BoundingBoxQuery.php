@@ -124,6 +124,7 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
         return $this->westLongitude !== null;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $geoQuery = new \Elastica\Query\GeoBoundingBox('pin',

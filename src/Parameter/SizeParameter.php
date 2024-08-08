@@ -26,6 +26,7 @@ class SizeParameter extends AbstractParameter
         return $this;
     }
 
+    #[\Override]
     public function addToElasticQuery(Query $query): Query
     {
         return $query->setSize($this->size);

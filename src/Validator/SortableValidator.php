@@ -19,6 +19,7 @@ class SortableValidator extends ConstraintValidator
         $this->entityFieldListFactory = $entityFieldListFactory;
     }
 
+    #[\Override]
     public function validate($entityTargetPropertyName, Constraint $constraint): void
     {
         if (!$entityTargetPropertyName) {

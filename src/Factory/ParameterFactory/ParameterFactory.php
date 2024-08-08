@@ -35,6 +35,7 @@ class ParameterFactory implements ParameterFactoryInterface
         $this->parameterListFactory = $parameterFieldListFactory;
     }
 
+    #[\Override]
     public function setEntityFqcn(string $entityFqcn): ParameterFactoryInterface
     {
         $this->entityFqcn = $entityFqcn;
@@ -42,13 +43,14 @@ class ParameterFactory implements ParameterFactoryInterface
         return $this;
     }
 
+    #[\Override]
     public function createFromList(RequestParameterList $requestParameterList): array
     {
         $parameterList = [];
 
         /** @var ParameterInterface $parameter */
         foreach ($this->parameterManager->getParameterList() as $parameterCandidate) {
-            $parameter = $this->checkForParameter(get_class($parameterCandidate), $requestParameterList);
+            $parameter = $this->checkForParameter($parameterCandidate::class, $requestParameterList);
 
             if ($parameter) {
                 $parameterList[] = $parameter;

@@ -9,6 +9,7 @@ class QueryManager implements QueryManagerInterface
     /** @var array $queryList */
     protected $queryList = [];
 
+    #[\Override]
     public function addQuery(QueryInterface $query): QueryManagerInterface
     {
         $this->queryList[] = $query;
@@ -16,6 +17,7 @@ class QueryManager implements QueryManagerInterface
         return $this;
     }
 
+    #[\Override]
     public function getQueryList(): array
     {
         return $this->queryList;

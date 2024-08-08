@@ -42,6 +42,7 @@ class UntilDateTimeQuery extends AbstractDateTimeQuery
         return new \DateTime(sprintf('@%d', $this->untilDateTime));
     }
 
+    #[\Override]
     public function isOverridenBy(): array
     {
         return [];

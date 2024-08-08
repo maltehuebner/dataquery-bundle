@@ -64,6 +64,7 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
         return $this;
     }
 
+    #[\Override]
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $kmDistance = sprintf('%dkm', $this->radius);

@@ -24,6 +24,7 @@ class StartValueParameter extends OrderParameter
         return $this;
     }
 
+    #[\Override]
     public function addToElasticQuery(Query $query): Query
     {
         $whereClause = [];

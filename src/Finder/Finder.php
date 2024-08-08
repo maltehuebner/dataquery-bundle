@@ -9,13 +9,11 @@ use MalteHuebner\DataQueryBundle\Query\QueryInterface;
 
 class Finder implements FinderInterface
 {
-    protected Repository $repository;
-
-    public function __construct(Repository $repository)
+    public function __construct(protected Repository $repository)
     {
-        $this->repository = $repository;
     }
 
+    #[\Override]
     public function executeQuery(array $queryList, array $parameterList): array
     {
         return $this->executeElasticQuery($queryList, $parameterList);

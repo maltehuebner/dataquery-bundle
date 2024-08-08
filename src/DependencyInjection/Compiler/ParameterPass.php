@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ParameterPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         if (!$container->has(ParameterManagerInterface::class)) {

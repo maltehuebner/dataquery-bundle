@@ -23,6 +23,7 @@ class ValueAssigner implements ValueAssignerInterface
         $this->paramConverterFactory = $paramConverterFactory;
     }
 
+    #[\Override]
     public function assignQueryPropertyValueFromRequest(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
     {
         if (!$requestParameterList->has($queryField->getParameterName())) {
@@ -59,6 +60,7 @@ class ValueAssigner implements ValueAssignerInterface
         return $query;
     }
 
+    #[\Override]
     public function assignParameterPropertyValueFromRequest(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterField $parameterField): ParameterInterface
     {
         if (!$parameterField->hasParameterName() || !$requestParameterList->has($parameterField->getParameterName())) {
@@ -103,7 +105,7 @@ class ValueAssigner implements ValueAssignerInterface
 
             try {
                 $converter->apply($request, $paramConverterConfiguration);
-            } catch (NotFoundHttpException $e) {
+            } catch (NotFoundHttpException) {
                 return $query;
             }
 

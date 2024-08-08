@@ -16,6 +16,7 @@ class MalteHuebnerDataQueryBundle extends Bundle
      *
      * @return void
      */
+    #[\Override]
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
