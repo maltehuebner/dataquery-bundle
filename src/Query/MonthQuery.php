@@ -16,7 +16,7 @@ class MonthQuery extends YearQuery
      * @Constraints\Range(min="1", max="12")
      * @Constraints\Type("int")
      */
-    protected int $month;
+    protected ?int $month = null;
     
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="month")

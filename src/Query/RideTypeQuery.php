@@ -13,7 +13,7 @@ class RideTypeQuery extends AbstractQuery implements DoctrineQueryInterface, Ela
     /**
      * @Constraints\NotNull()
      */
-    private string $rideType;
+    private ?string $rideType = null;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="rideType")
@@ -25,7 +25,7 @@ class RideTypeQuery extends AbstractQuery implements DoctrineQueryInterface, Ela
         return $this;
     }
 
-    public function getRideType(): string
+    public function getRideType(): ?string
     {
         return $this->rideType;
     }
