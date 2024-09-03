@@ -15,7 +15,7 @@ class CityQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
      * @Constraints\NotNull()
      * @Constraints\Type("App\Entity\City")
      */
-    private City $city;
+    private ?City $city = null;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="citySlug")
@@ -27,7 +27,7 @@ class CityQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
         return $this;
     }
 
-    public function getCity(): City
+    public function getCity(): ?City
     {
         return $this->city;
     }

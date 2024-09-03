@@ -13,7 +13,7 @@ class CityNameQuery extends AbstractQuery implements DoctrineQueryInterface, Ela
     /**
      * @Constraints\NotNull()
      */
-    protected string $name;
+    protected ?string $name = null;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="name")
@@ -25,7 +25,7 @@ class CityNameQuery extends AbstractQuery implements DoctrineQueryInterface, Ela
         return $this;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

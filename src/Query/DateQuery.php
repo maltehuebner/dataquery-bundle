@@ -16,7 +16,7 @@ class DateQuery extends MonthQuery
      * @Constraints\Range(min="1", max="31")
      * @Constraints\Type("int")
      */
-    private $day;
+    private ?int $day = null;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="day")

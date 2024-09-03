@@ -17,28 +17,28 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
      * @Constraints\Type("float")
      * @Constraints\Range(min="-90", max="90")
      */
-    private float $northLatitude;
+    private ?float $northLatitude = null;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="-90", max="90")
      */
-    private float $southLatitude;
+    private ?float $southLatitude = null;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="-180", max="180")
      */
-    private float $eastLongitude;
+    private ?float $eastLongitude = null;
 
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="-180", max="180")
      */
-    private float $westLongitude;
+    private ?float $westLongitude = null;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="bbNorthLatitude")

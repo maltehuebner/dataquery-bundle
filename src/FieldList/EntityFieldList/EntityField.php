@@ -14,9 +14,9 @@ class EntityField extends AbstractField
 
     private bool $defaultQueryBool = false;
 
-    private string $dateTimeFormat;
+    private ?string $dateTimeFormat = null;
 
-    private string $dateTimePattern;
+    private ?string $dateTimePattern = null;
 
     public function isQueryable(): bool
     {

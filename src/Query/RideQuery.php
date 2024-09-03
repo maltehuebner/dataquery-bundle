@@ -15,7 +15,7 @@ class RideQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
      * @Constraints\NotNull()
      * @Constraints\Type("App\Entity\Ride")
      */
-    private Ride $ride;
+    private ?Ride $ride = null;
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="rideIdentifier")
@@ -27,7 +27,7 @@ class RideQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
         return $this;
     }
 
-    public function getRide(): Ride
+    public function getRide(): ?Ride
     {
         return $this->ride;
     }
