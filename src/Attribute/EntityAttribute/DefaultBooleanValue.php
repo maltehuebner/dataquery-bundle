@@ -4,9 +4,6 @@ namespace MalteHuebner\DataQueryBundle\Attribute\EntityAttribute;
 
 use MalteHuebner\DataQueryBundle\Attribute\AbstractAttribute;
 
-/**
- * @Annotation
- */
 class DefaultBooleanValue extends AbstractAttribute implements EntityAttributeInterface
 {
     /** @var string $alias */

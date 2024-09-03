@@ -4,9 +4,6 @@ namespace MalteHuebner\DataQueryBundle\Attribute\QueryAttribute;
 
 use MalteHuebner\DataQueryBundle\Attribute\AbstractAttribute;
 
-/**
- * @Annotation
- */
 class RequiredEntityProperty extends AbstractAttribute implements QueryAttributeInterface
 {
     /** @var string $propertyName */
