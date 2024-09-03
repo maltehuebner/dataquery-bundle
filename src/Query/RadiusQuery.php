@@ -28,7 +28,6 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
      * @Constraints\NotNull()
      * @Constraints\Type("float")
      * @Constraints\Range(min="0", max="50000")
-     * @var float $radius
      */
     private ?float $radius = null;
 
