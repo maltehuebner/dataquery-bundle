@@ -4,6 +4,7 @@ namespace MalteHuebner\DataQueryBundle\Query;
 
 use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
@@ -11,11 +12,9 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, DoctrineQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\GreaterThanOrEqual(value="1990")
-     * @Constraints\Type("int")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("int")]
+    #[Constraints\GreaterThanOrEqual(1990)]
     protected ?int $year = null;
 
     /**

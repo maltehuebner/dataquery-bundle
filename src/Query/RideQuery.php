@@ -11,10 +11,8 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class RideQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("App\Entity\Ride")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type(Ride::class)]
     private ?Ride $ride = null;
 
     /**

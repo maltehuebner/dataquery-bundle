@@ -12,32 +12,24 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-90", max="90")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("float")]
+    #[Constraints\Range(min:-90, max:90)]
     private ?float $northLatitude = null;
 
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-90", max="90")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("float")]
+    #[Constraints\Range(min:-90, max:90)]
     private ?float $southLatitude = null;
 
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-180", max="180")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("float")]
+    #[Constraints\Range(min:-180, max:180)]
     private ?float $eastLongitude = null;
 
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-180", max="180")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("float")]
+    #[Constraints\Range(min:-180, max:180)]
     private ?float $westLongitude = null;
 
     /**

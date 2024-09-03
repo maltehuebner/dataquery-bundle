@@ -11,10 +11,8 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("App\Entity\Region")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type(Region::class)]
     private ?Region $region = null;
 
     /**
