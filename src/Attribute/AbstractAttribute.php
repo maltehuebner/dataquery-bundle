@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace MalteHuebner\DataQueryBundle\Annotation;
+namespace MalteHuebner\DataQueryBundle\Attribute;
 
-abstract class AbstractAnnotation implements AnnotationInterface
+abstract class AbstractAttribute implements AttributeInterface
 {
     public function __construct(array $options = [])
     {

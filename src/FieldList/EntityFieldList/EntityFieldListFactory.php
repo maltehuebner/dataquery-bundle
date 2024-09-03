@@ -2,11 +2,11 @@
 
 namespace MalteHuebner\DataQueryBundle\FieldList\EntityFieldList;
 
-use MalteHuebner\DataQueryBundle\Annotation\AnnotationInterface;
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\DateTimeQueryable;
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\DefaultBooleanValue;
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\Queryable;
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\Sortable;
+use MalteHuebner\DataQueryBundle\Attribute\AttributeInterface;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute\DateTimeQueryable;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute\DefaultBooleanValue;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute\Queryable;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute\Sortable;
 use MalteHuebner\DataQueryBundle\Exception\NoReturnTypeForEntityMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
@@ -43,7 +43,7 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
             $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($reflectionProperty);
 
             foreach ($propertyAnnotations as $propertyAnnotation) {
-                if ($propertyAnnotation instanceof AnnotationInterface) {
+                if ($propertyAnnotation instanceof AttributeInterface) {
                     $entityField = new EntityField();
                     $entityField->setPropertyName($reflectionProperty->getName());
 
@@ -64,7 +64,7 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
             $methodAnnotations = $this->annotationReader->getMethodAnnotations($reflectionMethod);
 
             foreach ($methodAnnotations as $methodAnnotation) {
-                if ($methodAnnotation instanceof AnnotationInterface) {
+                if ($methodAnnotation instanceof AttributeInterface) {
                     /** @var \ReflectionType $returnType */
                     $returnType = $reflectionMethod->getReturnType();
 
@@ -85,7 +85,7 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
         }
     }
 
-    protected function processAnnotations(AnnotationInterface $annotation, EntityField $entityField): EntityField
+    protected function processAnnotations(AttributeInterface $annotation, EntityField $entityField): EntityField
     {
         if ($annotation instanceof Sortable) {
             $entityField->setSortable(true);

@@ -2,8 +2,8 @@
 
 namespace MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList;
 
-use MalteHuebner\DataQueryBundle\Annotation\AnnotationInterface;
-use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation\RequiredParameter;
+use MalteHuebner\DataQueryBundle\Attribute\AttributeInterface;
+use MalteHuebner\DataQueryBundle\Attribute\ParameterAttribute\RequiredParameter;
 use MalteHuebner\DataQueryBundle\Exception\NotOneParameterForRequiredMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
@@ -41,7 +41,7 @@ class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
             $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($reflectionProperty);
 
             foreach ($propertyAnnotations as $propertyAnnotation) {
-                if ($propertyAnnotation instanceof AnnotationInterface) {
+                if ($propertyAnnotation instanceof AttributeInterface) {
                     $parameterField = new ParameterField();
                     $parameterField->setPropertyName($reflectionProperty->getName());
 
@@ -64,7 +64,7 @@ class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
             $methodAnnotations = $this->annotationReader->getMethodAnnotations($reflectionMethod);
 
             foreach ($methodAnnotations as $methodAnnotation) {
-                if ($methodAnnotation instanceof AnnotationInterface) {
+                if ($methodAnnotation instanceof AttributeInterface) {
 
                     if ($reflectionMethod->getNumberOfParameters() !== 1) {
                         throw new NotOneParameterForRequiredMethodException($reflectionMethod->getName(), $this->parameterFqcn);

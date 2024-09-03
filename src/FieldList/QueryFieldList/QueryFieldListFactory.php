@@ -2,7 +2,7 @@
 
 namespace MalteHuebner\DataQueryBundle\FieldList\QueryFieldList;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation\RequiredQueryParameter;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute\RequiredQueryParameter;
 use MalteHuebner\DataQueryBundle\Exception\NotOneParameterForRequiredMethodException;
 use MalteHuebner\DataQueryBundle\Exception\NoTypedParameterForRequiredMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;

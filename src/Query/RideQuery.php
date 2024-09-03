@@ -2,7 +2,7 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\Ride;
 use Symfony\Component\Validator\Constraints as Constraints;
 

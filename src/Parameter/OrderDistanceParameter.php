@@ -2,7 +2,7 @@
 
 namespace MalteHuebner\DataQueryBundle\Parameter;
 
-use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\ParameterAttribute as DataQuery;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 

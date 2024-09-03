@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation;
+namespace MalteHuebner\DataQueryBundle\Attribute\QueryAttribute;
 
-use MalteHuebner\DataQueryBundle\Annotation\AbstractAnnotation;
+use MalteHuebner\DataQueryBundle\Attribute\AbstractAttribute;
 
 /**
  * @Annotation
  */
-class RequiredQueryParameter extends AbstractAnnotation implements QueryAnnotationInterface
+class RequiredQueryParameter extends AbstractAttribute implements QueryAttributeInterface
 {
     /** @var string $parameterName */
     protected $parameterName;

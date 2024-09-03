@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation;
+namespace MalteHuebner\DataQueryBundle\Attribute\EntityAttribute;
 
-use MalteHuebner\DataQueryBundle\Annotation\AbstractAnnotation;
+use MalteHuebner\DataQueryBundle\Attribute\AbstractAttribute;
 
 /**
  * @Annotation
  */
-class DefaultBooleanValue extends AbstractAnnotation implements EntityAnnotationInterface
+class DefaultBooleanValue extends AbstractAttribute implements EntityAttributeInterface
 {
     /** @var string $alias */
     protected $alias;

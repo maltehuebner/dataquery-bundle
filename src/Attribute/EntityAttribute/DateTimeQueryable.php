@@ -1,11 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation;
+namespace MalteHuebner\DataQueryBundle\Attribute\EntityAttribute;
 
-/**
- * @Annotation
- */
-class DateTimeQueryable extends Queryable implements EntityAnnotationInterface
+class DateTimeQueryable extends Queryable implements EntityAttributeInterface
 {
     /** @var array $accepts */
     protected $accepts = [];
