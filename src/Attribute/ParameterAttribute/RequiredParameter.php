@@ -4,6 +4,7 @@ namespace MalteHuebner\DataQueryBundle\Attribute\ParameterAttribute;
 
 use MalteHuebner\DataQueryBundle\Attribute\AbstractAttribute;
 
+#[\Attribute]
 class RequiredParameter extends AbstractAttribute implements ParameterAttributeInterface
 {
     public function __construct(private readonly string $parameterName)

@@ -2,6 +2,7 @@
 
 namespace MalteHuebner\DataQueryBundle\Attribute\EntityAttribute;
 
+#[\Attribute]
 class DateTimeQueryable extends Queryable implements EntityAttributeInterface
 {
     public function __construct(

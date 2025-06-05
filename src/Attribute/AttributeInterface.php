@@ -2,7 +2,6 @@
 
 namespace MalteHuebner\DataQueryBundle\Attribute;
 
-#[\Attribute]
 interface AttributeInterface
 {
 
