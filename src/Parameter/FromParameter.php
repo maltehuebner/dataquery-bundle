@@ -13,9 +13,7 @@ class FromParameter extends AbstractParameter
     #[Constraints\Range(min: 0)]
     private int $from;
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="from")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'from')]
     public function setFrom(int $from): FromParameter
     {
         $this->from = $from;

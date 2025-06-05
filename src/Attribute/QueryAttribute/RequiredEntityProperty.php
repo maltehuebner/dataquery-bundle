@@ -6,11 +6,13 @@ use MalteHuebner\DataQueryBundle\Attribute\AbstractAttribute;
 
 class RequiredEntityProperty extends AbstractAttribute implements QueryAttributeInterface
 {
-    /** @var string $propertyName */
-    protected $propertyName;
+    public function __construct(
+        private readonly string $propertyName,
+        private readonly ?string $propertyType = null
+    )
+    {
 
-    /** @var string $propertyType */
-    protected $propertyType;
+    }
 
     public function getPropertyName(): string
     {

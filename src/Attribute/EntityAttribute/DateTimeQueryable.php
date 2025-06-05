@@ -4,14 +4,13 @@ namespace MalteHuebner\DataQueryBundle\Attribute\EntityAttribute;
 
 class DateTimeQueryable extends Queryable implements EntityAttributeInterface
 {
-    /** @var array $accepts */
-    protected $accepts = [];
+    public function __construct(
+        private readonly array $accepts = [],
+        private readonly ?string $format = null,
+        private readonly ?string $pattern = null)
+    {
 
-    /** @var string $format */
-    protected $format;
-
-    /** @var string $pattern */
-    protected $pattern;
+    }
 
     public function getAccepts(): array
     {

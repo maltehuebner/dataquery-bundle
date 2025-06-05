@@ -6,11 +6,12 @@ use MalteHuebner\DataQueryBundle\Attribute\AbstractAttribute;
 
 class DefaultBooleanValue extends AbstractAttribute implements EntityAttributeInterface
 {
-    /** @var string $alias */
-    protected $alias;
+    public function __construct(
+        private readonly ?string $alias = null,
+        private readonly bool $value = false)
+    {
 
-    /** @var bool $value */
-    protected $value;
+    }
 
     public function getAlias(): ?string
     {

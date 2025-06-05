@@ -6,8 +6,10 @@ use MalteHuebner\DataQueryBundle\Attribute\AbstractAttribute;
 
 class RequiredParameter extends AbstractAttribute implements ParameterAttributeInterface
 {
-    /** @var string $parameterName */
-    protected $parameterName;
+    public function __construct(private readonly string $parameterName)
+    {
+
+    }
 
     public function getParameterName(): string
     {
