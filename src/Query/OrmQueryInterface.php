@@ -2,7 +2,10 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
-interface DoctrineQueryInterface extends QueryInterface
-{
+use \Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
+use Doctrine\ORM\QueryBuilder;
 
+interface OrmQueryInterface extends QueryInterface
+{
+    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery;
 }

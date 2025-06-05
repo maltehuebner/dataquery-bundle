@@ -2,15 +2,16 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
+use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
+use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
  */
-class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, DoctrineQueryInterface
+class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, OrmQueryInterface
 {
     #[Constraints\NotNull]
     #[Constraints\Type("int")]
@@ -54,5 +55,25 @@ class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, 
             MonthQuery::class,
             DateQuery::class,
         ];
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    {
+        $alias = $queryBuilder->getRootAliases()[0];
+        $expr = $queryBuilder->expr();
+
+        $fromDateTime = DateTimeUtil::getYearStartDateTime($this->toDateTime());
+        $untilDateTime = DateTimeUtil::getYearEndDateTime($this->toDateTime());
+
+        $queryBuilder
+            ->andWhere($expr->between(
+                sprintf('%s.%s', $alias, $this->propertyName),
+                ':fromDateTime',
+                ':untilDateTime'
+            ))
+            ->setParameter('fromDateTime', $fromDateTime)
+            ->setParameter('untilDateTime', $untilDateTime);
+
+        return $queryBuilder->getQuery();
     }
 }
