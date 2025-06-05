@@ -10,17 +10,15 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class OrderParameter extends AbstractParameter implements PropertyTargetingParameterInterface
 {
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
      * @Sortable
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('string')]
     private string $propertyName;
 
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     * @Constraints\Choice(choices = {"ASC", "DESC"})
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type('string')]
+    #[Constraints\Choice(choices: ['ASC', 'DESC'])]
     protected string $direction;
 
     /**

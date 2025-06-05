@@ -6,22 +6,16 @@ use Symfony\Component\Validator\Constraints as Constraints;
 
 abstract class AbstractDateTimeQuery extends AbstractQuery implements DateTimeQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("string")]
     protected string $dateTimePattern;
 
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("string")]
     protected string $dateTimeFormat;
 
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("string")]
     protected string $propertyName;
 
     #[\Override]

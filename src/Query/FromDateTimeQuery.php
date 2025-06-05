@@ -10,10 +10,8 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class FromDateTimeQuery extends AbstractDateTimeQuery
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("int")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("int")]
     private ?int $fromDateTime = null;
 
     /**

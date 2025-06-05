@@ -11,11 +11,9 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class DateQuery extends MonthQuery
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Range(min="1", max="31")
-     * @Constraints\Type("int")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("int")]
+    #[Constraints\Range(min: 1, max: 31)]
     private ?int $day = null;
 
     /**

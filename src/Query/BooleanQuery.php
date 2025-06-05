@@ -6,16 +6,12 @@ use Symfony\Component\Validator\Constraints as Constraints;
 
 class BooleanQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("string")]
     protected string $propertyName;
 
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("boolean")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("bool")]
     protected bool $value = false;
 
     public function setPropertyName(string $propertyName): BooleanQuery

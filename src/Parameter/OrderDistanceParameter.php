@@ -8,23 +8,17 @@ use Symfony\Component\Validator\Constraints as Constraints;
 
 class OrderDistanceParameter extends AbstractParameter
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type('float')]
     private float $latitude;
 
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type('float')]
     private float $longitude;
 
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     * @Constraints\Choice(choices = {"ASC", "DESC"})
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type('string')]
+    #[Constraints\Choice(choices: ['ASC', 'DESC'])]
     private string $direction;
 
     /**

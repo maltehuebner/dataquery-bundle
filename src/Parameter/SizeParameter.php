@@ -8,11 +8,9 @@ use Symfony\Component\Validator\Constraints as Constraints;
 
 class SizeParameter extends AbstractParameter
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("int")
-     * @Constraints\Range(min="1", max="500")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type('int')]
+    #[Constraints\Range(min: 1, max: 500)]
     protected int $size;
 
     /**

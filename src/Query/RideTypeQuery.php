@@ -10,9 +10,8 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class RideTypeQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("string")]
     private ?string $rideType = null;
 
     /**
