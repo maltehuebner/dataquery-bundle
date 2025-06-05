@@ -5,23 +5,12 @@ namespace MalteHuebner\DataQueryBundle\FieldList\QueryFieldList;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute\RequiredQueryParameter;
 use MalteHuebner\DataQueryBundle\Exception\NotOneParameterForRequiredMethodException;
 use MalteHuebner\DataQueryBundle\Exception\NoTypedParameterForRequiredMethodException;
-use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class QueryFieldListFactory implements QueryFieldListFactoryInterface
 {
-    /** @var AnnotationReader $annotationReader */
-    protected $annotationReader;
+    protected string $queryFqcn;
 
-    /** @var string $queryFqcn */
-    protected $queryFqcn;
-
-    /** @var QueryFieldList $queryFieldList */
-    protected $queryFieldList;
-
-    public function __construct(AnnotationReader $annotationReader)
-    {
-        $this->annotationReader = $annotationReader;
-    }
+    protected QueryFieldList $queryFieldList;
 
     #[\Override]
     public function createForFqcn(string $queryFqcn): QueryFieldList
@@ -39,20 +28,22 @@ class QueryFieldListFactory implements QueryFieldListFactoryInterface
     {
         $reflectionClass = new \ReflectionClass($this->queryFqcn);
 
-        /** @var \ReflectionProperty $reflectionProperty */
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
-            $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($reflectionProperty);
+            foreach ($reflectionProperty->getAttributes(RequiredQueryParameter::class) as $attribute) {
+                $instance = $attribute->newInstance();
 
-            foreach ($propertyAnnotations as $propertyAnnotation) {
-                if ($propertyAnnotation instanceof RequiredQueryParameter) {
-                    $queryField = new QueryField();
-                    $queryField
-                        ->setPropertyName($reflectionProperty->getName())
-                        ->setParameterName($propertyAnnotation->getParameterName());
-                    // TODO: Get property type here for php 7.4
+                $queryField = new QueryField();
+                $queryField
+                    ->setPropertyName($reflectionProperty->getName())
+                    ->setParameterName($instance->getParameterName());
 
-                    $this->queryFieldList->addField($reflectionProperty->getName(), $queryField);
+                // Optional: Typ holen (ab PHP 7.4+ möglich)
+                $type = $reflectionProperty->getType();
+                if ($type) {
+                    $queryField->setType($type->getName());
                 }
+
+                $this->queryFieldList->addField($reflectionProperty->getName(), $queryField);
             }
         }
     }
@@ -61,32 +52,28 @@ class QueryFieldListFactory implements QueryFieldListFactoryInterface
     {
         $reflectionClass = new \ReflectionClass($this->queryFqcn);
 
-        /** @var \ReflectionMethod $reflectionMethod */
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-            $methodAnnotations = $this->annotationReader->getMethodAnnotations($reflectionMethod);
+            foreach ($reflectionMethod->getAttributes(RequiredQueryParameter::class) as $attribute) {
+                $instance = $attribute->newInstance();
 
-            foreach ($methodAnnotations as $methodAnnotation) {
-                if ($methodAnnotation instanceof RequiredQueryParameter) {
-
-                    if ($reflectionMethod->getNumberOfParameters() !== 1) {
-                        throw new NotOneParameterForRequiredMethodException($reflectionMethod->getName(), $this->queryFqcn);
-                    }
-
-                    $methodParameter = $reflectionMethod->getParameters()[0];
-                    $reflectionType = $methodParameter->getType();
-
-                    if (!$reflectionType) {
-                        throw new NoTypedParameterForRequiredMethodException($reflectionMethod->getName(), $this->queryFqcn);
-                    }
-
-                    $entityField = new QueryField();
-                    $entityField
-                        ->setMethodName($reflectionMethod->getName())
-                        ->setParameterName($methodAnnotation->getParameterName())
-                        ->setType($reflectionType->getName());
-
-                    $this->queryFieldList->addField($reflectionMethod->getName(), $entityField);
+                if ($reflectionMethod->getNumberOfParameters() !== 1) {
+                    throw new NotOneParameterForRequiredMethodException($reflectionMethod->getName(), $this->queryFqcn);
                 }
+
+                $methodParameter = $reflectionMethod->getParameters()[0];
+                $reflectionType = $methodParameter->getType();
+
+                if (!$reflectionType) {
+                    throw new NoTypedParameterForRequiredMethodException($reflectionMethod->getName(), $this->queryFqcn);
+                }
+
+                $queryField = new QueryField();
+                $queryField
+                    ->setMethodName($reflectionMethod->getName())
+                    ->setParameterName($instance->getParameterName())
+                    ->setType($reflectionType->getName());
+
+                $this->queryFieldList->addField($reflectionMethod->getName(), $queryField);
             }
         }
     }

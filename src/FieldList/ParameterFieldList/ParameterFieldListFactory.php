@@ -5,20 +5,12 @@ namespace MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList;
 use MalteHuebner\DataQueryBundle\Attribute\AttributeInterface;
 use MalteHuebner\DataQueryBundle\Attribute\ParameterAttribute\RequiredParameter;
 use MalteHuebner\DataQueryBundle\Exception\NotOneParameterForRequiredMethodException;
-use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
 {
     private string $parameterFqcn;
 
     protected ParameterFieldList $parameterFieldList;
-
-    public function __construct(
-        private readonly AnnotationReader $annotationReader
-    )
-    {
-
-    }
 
     #[\Override]
     public function createForFqcn(string $parameterFqcn): ParameterFieldList
@@ -36,17 +28,16 @@ class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
     {
         $reflectionClass = new \ReflectionClass($this->parameterFqcn);
 
-        /** @var \ReflectionProperty $reflectionProperty */
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
-            $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($reflectionProperty);
+            foreach ($reflectionProperty->getAttributes() as $attribute) {
+                $instance = $attribute->newInstance();
 
-            foreach ($propertyAnnotations as $propertyAnnotation) {
-                if ($propertyAnnotation instanceof AttributeInterface) {
+                if ($instance instanceof AttributeInterface) {
                     $parameterField = new ParameterField();
                     $parameterField->setPropertyName($reflectionProperty->getName());
 
-                    if ($propertyAnnotation instanceof RequiredParameter) {
-                        $parameterField->setParameterName($propertyAnnotation->getParameterName());
+                    if ($instance instanceof RequiredParameter) {
+                        $parameterField->setParameterName($instance->getParameterName());
                     }
 
                     $this->parameterFieldList->addField($reflectionProperty->getName(), $parameterField);
@@ -59,12 +50,11 @@ class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
     {
         $reflectionClass = new \ReflectionClass($this->parameterFqcn);
 
-        /** @var \ReflectionMethod $reflectionMethod */
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-            $methodAnnotations = $this->annotationReader->getMethodAnnotations($reflectionMethod);
+            foreach ($reflectionMethod->getAttributes() as $attribute) {
+                $instance = $attribute->newInstance();
 
-            foreach ($methodAnnotations as $methodAnnotation) {
-                if ($methodAnnotation instanceof AttributeInterface) {
+                if ($instance instanceof AttributeInterface) {
 
                     if ($reflectionMethod->getNumberOfParameters() !== 1) {
                         throw new NotOneParameterForRequiredMethodException($reflectionMethod->getName(), $this->parameterFqcn);
@@ -76,16 +66,12 @@ class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
                     $methodParameter = $reflectionMethod->getParameters()[0];
                     $reflectionType = $methodParameter->getType();
 
-                    if ($reflectionType) {
-                        $parameterField->setType($reflectionType->getName());
-                    } else {
-                        $parameterField->setType('mixed');
+                    $parameterField->setType($reflectionType?->getName() ?? 'mixed');
+
+                    if ($instance instanceof RequiredParameter) {
+                        $parameterField->setParameterName($instance->getParameterName());
                     }
 
-                    if ($methodAnnotation instanceof RequiredParameter) {
-                        $parameterField->setParameterName($methodAnnotation->getParameterName());
-                    }
-                    
                     $this->parameterFieldList->addField($reflectionMethod->getName(), $parameterField);
                 }
             }
