@@ -8,9 +8,7 @@ use Symfony\Component\Validator\Constraints as Constraints;
 
 class StartValueParameter extends OrderParameter
 {
-    /**
-     * @Constraints\NotNull()
-     */
+    #[Constraints\NotNull]
     private mixed $startValue;
 
     /**
