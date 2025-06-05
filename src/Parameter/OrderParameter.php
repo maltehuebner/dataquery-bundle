@@ -14,7 +14,7 @@ class OrderParameter extends AbstractParameter implements PropertyTargetingParam
      */
     #[Constraints\NotNull]
     #[Constraints\Type('string')]
-    private string $propertyName;
+    protected string $propertyName;
 
     #[Constraints\NotNull]
     #[Constraints\Type('string')]
