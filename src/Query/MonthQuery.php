@@ -11,11 +11,9 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class MonthQuery extends YearQuery
 {
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Range(min="1", max="12")
-     * @Constraints\Type("int")
-     */
+    #[Constraints\NotNull]
+    #[Constraints\Type("int")]
+    #[Constraints\Range(min: 1, max: 12)]
     protected ?int $month = null;
     
     /**
