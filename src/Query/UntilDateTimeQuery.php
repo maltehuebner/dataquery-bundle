@@ -5,18 +5,14 @@ namespace MalteHuebner\DataQueryBundle\Query;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
 class UntilDateTimeQuery extends AbstractDateTimeQuery
 {
     #[Constraints\NotNull]
-    #[Constraints\Type("int")]
+    #[Constraints\Type('int')]
     private ?int $untilDateTime = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="untilDateTime")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'untilDateTime')]
     public function setUntilDateTime(int $untilDateTime): UntilDateTimeQuery
     {
         $this->untilDateTime = $untilDateTime;

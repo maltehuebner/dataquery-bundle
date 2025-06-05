@@ -5,12 +5,10 @@ namespace MalteHuebner\DataQueryBundle\Validator\Constraint;
 use MalteHuebner\DataQueryBundle\Validator\SortableValidator;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::IS_REPEATABLE)]
 class Sortable extends Constraint
 {
-    public $message = 'Target field {{ entityTargetPropertyName }} of class {{ entityFqcn }} ist not sortable';
+    public string $message = 'Target field {{ entityTargetPropertyName }} of class {{ entityFqcn }} ist not sortable';
 
     #[\Override]
     public function getTargets(): string

@@ -6,18 +6,14 @@ use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\Ride;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="slug")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'slug')]
 class RideQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
     #[Constraints\Type(Ride::class)]
     private ?Ride $ride = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="rideIdentifier")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'rideIdentifier')]
     public function setRide(Ride $ride): RideQuery
     {
         $this->ride = $ride;

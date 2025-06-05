@@ -6,10 +6,9 @@ use MalteHuebner\DataQueryBundle\FieldList\AbstractField;
 
 class QueryField extends AbstractField
 {
-    /** @var string $parameterName */
-    protected $parameterName;
+    protected ?string $parameterName = null;
 
-    public function getParameterName(): string
+    public function getParameterName(): ?string
     {
         return $this->parameterName;
     }

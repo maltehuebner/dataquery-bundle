@@ -11,9 +11,7 @@ class StartValueParameter extends OrderParameter
     #[Constraints\NotNull]
     private mixed $startValue;
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="startValue")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'startValue')]
     public function setStartValue(mixed $startValue): StartValueParameter
     {
         $this->startValue = $startValue;
@@ -31,7 +29,7 @@ class StartValueParameter extends OrderParameter
         } else {
             $whereClause['lte'] = $this->startValue;
         }
-        
+
         $startQuery = new \Elastica\Query\Range($this->propertyName, $whereClause);
 
         $query->getQuery()->addMust($startQuery);

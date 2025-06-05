@@ -5,18 +5,14 @@ namespace MalteHuebner\DataQueryBundle\Query;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
 class FromDateTimeQuery extends AbstractDateTimeQuery
 {
     #[Constraints\NotNull]
-    #[Constraints\Type("int")]
+    #[Constraints\Type('int')]
     private ?int $fromDateTime = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="fromDateTime")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'fromDateTime')]
     public function setFromDateTime(int $fromDateTime): FromDateTimeQuery
     {
         $this->fromDateTime = $fromDateTime;

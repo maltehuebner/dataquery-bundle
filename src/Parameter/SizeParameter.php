@@ -13,9 +13,7 @@ class SizeParameter extends AbstractParameter
     #[Constraints\Range(min: 1, max: 500)]
     protected int $size;
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="size")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'size')]
     public function setSize(int $size): SizeParameter
     {
         $this->size = $size;

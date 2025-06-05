@@ -5,29 +5,25 @@ namespace MalteHuebner\DataQueryBundle\Query;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="pin", propertyType="string")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'pin', propertyType: 'string')]
 class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
 {
     #[Constraints\NotNull]
-    #[Constraints\Type("float")]
+    #[Constraints\Type('float')]
     #[Constraints\Range(min: -90, max: 90)]
     private ?float $centerLatitude = null;
 
     #[Constraints\NotNull]
-    #[Constraints\Type("float")]
+    #[Constraints\Type('float')]
     #[Constraints\Range(min: -180, max: 180)]
     private ?float $centerLongitude = null;
 
     #[Constraints\NotNull]
-    #[Constraints\Type("float")]
+    #[Constraints\Type('float')]
     #[Constraints\Range(min: 0, max: 50000)]
     private ?float $radius = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="centerLatitude")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'centerLatitude')]
     public function setCenterLatitude(float $centerLatitude): RadiusQuery
     {
         $this->centerLatitude = $centerLatitude;
@@ -35,9 +31,7 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
         return $this;
     }
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="centerLongitude")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'centerLongitude')]
     public function setCenterLongitude(float $centerLongitude): RadiusQuery
     {
         $this->centerLongitude = $centerLongitude;
@@ -45,9 +39,7 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
         return $this;
     }
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="radius")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'radius')]
     public function setRadius(float $radius): RadiusQuery
     {
         $this->radius = $radius;
@@ -63,9 +55,7 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
         $geoQuery = new \Elastica\Query\GeoDistance('pin', [
             'lat' => $this->centerLatitude,
             'lon' => $this->centerLongitude,
-        ],
-            $kmDistance
-        );
+        ], $kmDistance);
 
         return $geoQuery;
     }

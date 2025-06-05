@@ -5,17 +5,13 @@ namespace MalteHuebner\DataQueryBundle\Query;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="name")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'name')]
 class CityNameQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
     protected ?string $name = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="name")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'name')]
     public function setName(string $name): CityNameQuery
     {
         $this->name = $name;

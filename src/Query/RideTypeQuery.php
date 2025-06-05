@@ -5,18 +5,14 @@ namespace MalteHuebner\DataQueryBundle\Query;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="rideType")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'rideType')]
 class RideTypeQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
-    #[Constraints\Type("string")]
+    #[Constraints\Type('string')]
     private ?string $rideType = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="rideType")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'rideType')]
     public function setRideType(string $rideType): self
     {
         $this->rideType = $rideType;

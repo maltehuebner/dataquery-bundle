@@ -6,19 +6,15 @@ use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
 class DateQuery extends MonthQuery
 {
     #[Constraints\NotNull]
-    #[Constraints\Type("int")]
+    #[Constraints\Type('int')]
     #[Constraints\Range(min: 1, max: 31)]
     private ?int $day = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="day")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'day')]
     public function setDay(int $day): DateQuery
     {
         $this->day = $day;

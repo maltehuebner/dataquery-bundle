@@ -9,21 +9,17 @@ use Symfony\Component\Validator\Constraints as Constraints;
 
 class OrderParameter extends AbstractParameter implements PropertyTargetingParameterInterface
 {
-    /**
-     * @Sortable
-     */
+    #[Sortable]
     #[Constraints\NotNull]
     #[Constraints\Type('string')]
-    private string $propertyName;
+    protected string $propertyName;
 
     #[Constraints\NotNull]
     #[Constraints\Type('string')]
     #[Constraints\Choice(choices: ['ASC', 'DESC'])]
     protected string $direction;
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="orderBy")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'orderBy')]
     public function setPropertyName(string $propertyName): OrderParameter
     {
         $this->propertyName = $propertyName;
@@ -37,9 +33,7 @@ class OrderParameter extends AbstractParameter implements PropertyTargetingParam
         return $this->propertyName;
     }
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="orderDirection")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'orderDirection')]
     public function setDirection(string $direction): OrderParameter
     {
         $this->direction = strtoupper($direction);

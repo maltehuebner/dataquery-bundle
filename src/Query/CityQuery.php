@@ -6,18 +6,14 @@ use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\City;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="slug")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'slug')]
 class CityQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
     #[Constraints\Type(City::class)]
     private ?City $city = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="citySlug")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'citySlug')]
     public function setCity(City $city): CityQuery
     {
         $this->city = $city;

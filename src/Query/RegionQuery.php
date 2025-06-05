@@ -6,18 +6,14 @@ use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\Region;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="region")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'region')]
 class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
     #[Constraints\Type(Region::class)]
     private ?Region $region = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="regionSlug")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'regionSlug')]
     public function setRegion(Region $region): RegionQuery
     {
         $this->region = $region;

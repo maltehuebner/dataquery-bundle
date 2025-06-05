@@ -21,9 +21,7 @@ class OrderDistanceParameter extends AbstractParameter
     #[Constraints\Choice(choices: ['ASC', 'DESC'])]
     private string $direction;
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="centerLatitude")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'centerLatitude')]
     public function setLatitude(float $latitude): OrderDistanceParameter
     {
         $this->latitude = $latitude;
@@ -31,9 +29,7 @@ class OrderDistanceParameter extends AbstractParameter
         return $this;
     }
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="centerLongitude")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'centerLongitude')]
     public function setLongitude(float $longitude): OrderDistanceParameter
     {
         $this->longitude = $longitude;
@@ -41,9 +37,7 @@ class OrderDistanceParameter extends AbstractParameter
         return $this;
     }
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="distanceOrderDirection")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'distanceOrderDirection')]
     public function setDirection(string $direction): OrderDistanceParameter
     {
         $this->direction = strtoupper($direction);
