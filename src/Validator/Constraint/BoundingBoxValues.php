@@ -5,9 +5,7 @@ namespace MalteHuebner\DataQueryBundle\Validator\Constraint;
 use MalteHuebner\DataQueryBundle\Validator\BoundingBoxValidator;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class BoundingBoxValues extends Constraint
 {
     public $message = 'Invalid values for Bounding Box Query.';
