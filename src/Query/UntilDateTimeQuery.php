@@ -2,8 +2,10 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
+use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
+use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 
 #[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
 class UntilDateTimeQuery extends AbstractDateTimeQuery
@@ -28,6 +30,21 @@ class UntilDateTimeQuery extends AbstractDateTimeQuery
         ]);
 
         return $dateTimeQuery;
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    {
+        $alias = $queryBuilder->getRootAliases()[0];
+        $expr = $queryBuilder->expr();
+
+        $queryBuilder
+            ->andWhere($expr->lte(
+                sprintf('%s.%s', $alias, $this->propertyName),
+                ':untilDateTime'
+            ))
+            ->setParameter('untilDateTime', $this->getDateTime());
+
+        return $queryBuilder->getQuery();
     }
 
     protected function getDateTime(): \DateTime

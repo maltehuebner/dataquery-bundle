@@ -2,15 +2,19 @@
 
 namespace MalteHuebner\DataQueryBundle\Finder;
 
+use Doctrine\ORM\EntityManagerInterface;
 use FOS\ElasticaBundle\Repository;
 use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\QueryInterface;
 
 class Finder implements FinderInterface
 {
     public function __construct(
-        private readonly Repository $repository
+        private readonly string $fqcn,
+        private readonly Repository $repository,
+        private readonly EntityManagerInterface $entityManager
     ) {
 
     }
@@ -48,6 +52,21 @@ class Finder implements FinderInterface
 
     protected function executeOrmQuery(array $queryList): array
     {
-        return [];
+        $qb = $this->entityManager->createQueryBuilder()
+            ->select('e')
+            ->from($this->fqcn, 'e');
+
+        /** @var OrmQueryInterface $query */
+        foreach ($queryList as $query) {
+            if ($query instanceof OrmQueryInterface && method_exists($query, 'setQueryBuilder')) {
+                $query->setQueryBuilder($qb);
+                $query->createOrmQuery(); // verändert den $qb
+            }
+        }
+
+        /** @var AbstractOrmQuery $finalQuery */
+        $finalQuery = $qb->getQuery();
+
+        return $finalQuery->getResult();
     }
 }
