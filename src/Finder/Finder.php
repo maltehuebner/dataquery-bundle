@@ -5,6 +5,7 @@ namespace MalteHuebner\DataQueryBundle\Finder;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\ElasticaBundle\Repository;
 use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
+use MalteHuebner\DataQueryBundle\Parameter\SizeParameter;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\QueryInterface;
@@ -60,24 +61,39 @@ class Finder implements FinderInterface
     {
         $qb = $this->entityManager->createQueryBuilder()
             ->select('e')
-            ->from($this->fqcn, 'e');
+            ->from($this->fqcn, 'e')
+        ;
 
         /** @var OrmQueryInterface $query */
         foreach ($queryList as $query) {
-            if ($query instanceof OrmQueryInterface && method_exists($query, 'setQueryBuilder')) {
-                $query->setQueryBuilder($qb);
-                $query->createOrmQuery();
+            if ($query instanceof OrmQueryInterface) {
+                $qb = $query->createOrmQuery($qb);
             }
         }
 
+        $hasSizeParameter = false;
+        $finalQuery = null;
+
         /** @var ParameterInterface $parameter */
         foreach ($parameterList as $parameter) {
-            if ($parameter instanceof ParameterInterface && method_exists($parameter, 'addToOrmQuery')) {
-                $qb = $parameter->addToOrmQuery($qb);
+            if ($parameter instanceof SizeParameter) {
+                $hasSizeParameter = true;
             }
+
+            if ($parameter instanceof ParameterInterface && method_exists($parameter, 'addToOrmQuery')) {
+                $result = $parameter->addToOrmQuery($qb);
+
+                if ($result instanceof AbstractOrmQuery) {
+                    $finalQuery = $result;
+                }
+            }
+        }
+
+        // by default, ElasticSearch returns 10 results, but in ORM we set the max results to 10
+        if (!$hasSizeParameter) {
+            $qb->setMaxResults(10);
         }
 
         return $qb->getQuery()->getResult();
     }
-
 }
