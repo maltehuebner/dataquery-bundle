@@ -4,6 +4,7 @@ namespace MalteHuebner\DataQueryBundle\Attribute\QueryAttribute;
 
 use MalteHuebner\DataQueryBundle\Attribute\AbstractAttribute;
 
+#[\Attribute]
 class RequiredEntityProperty extends AbstractAttribute implements QueryAttributeInterface
 {
     public function __construct(
