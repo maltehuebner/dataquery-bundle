@@ -22,7 +22,15 @@ class Finder implements FinderInterface
     #[\Override]
     public function executeQuery(array $queryList, array $parameterList): array
     {
-        return $this->executeElasticQuery($queryList, $parameterList);
+        if ($this->entityManager) {
+            return $this->executeOrmQuery($queryList, $parameterList);
+        }
+
+        if ($this->repository) {
+            return $this->executeElasticQuery($queryList, $parameterList);
+        }
+
+        return [];
     }
 
     protected function executeElasticQuery(array $queryList, array $parameterList): array
