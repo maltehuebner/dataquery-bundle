@@ -53,12 +53,10 @@ class Finder implements FinderInterface
             }
         }
 
-        //dump(json_encode($query->toArray()));
-
         return $this->repository->find($query);
     }
 
-    protected function executeOrmQuery(array $queryList): array
+    protected function executeOrmQuery(array $queryList, array $parameterList): array
     {
         $qb = $this->entityManager->createQueryBuilder()
             ->select('e')
@@ -68,13 +66,18 @@ class Finder implements FinderInterface
         foreach ($queryList as $query) {
             if ($query instanceof OrmQueryInterface && method_exists($query, 'setQueryBuilder')) {
                 $query->setQueryBuilder($qb);
-                $query->createOrmQuery(); // verändert den $qb
+                $query->createOrmQuery();
             }
         }
 
-        /** @var AbstractOrmQuery $finalQuery */
-        $finalQuery = $qb->getQuery();
+        /** @var ParameterInterface $parameter */
+        foreach ($parameterList as $parameter) {
+            if ($parameter instanceof ParameterInterface && method_exists($parameter, 'addToOrmQuery')) {
+                $qb = $parameter->addToOrmQuery($qb);
+            }
+        }
 
-        return $finalQuery->getResult();
+        return $qb->getQuery()->getResult();
     }
+
 }
