@@ -11,9 +11,8 @@ class ParamConverterFactory implements ParamConverterFactoryInterface
     private const string PARAMCONVERTER_NAMESPACE = 'App\\Request\\ParamConverter\\';
     private const string PARAMCONVERTER_SUFFIX = 'ParamConverter';
 
-    public function __construct(
-        private ManagerRegistry $registry
-    ) {
+    public function __construct(private readonly ManagerRegistry $registry)
+    {
 
     }
 

@@ -2,21 +2,19 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use Doctrine\ORM\QueryBuilder;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
+use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
 class FromDateTimeQuery extends AbstractDateTimeQuery
 {
     #[Constraints\NotNull]
-    #[Constraints\Type("int")]
+    #[Constraints\Type('int')]
     private ?int $fromDateTime = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="fromDateTime")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'fromDateTime')]
     public function setFromDateTime(int $fromDateTime): FromDateTimeQuery
     {
         $this->fromDateTime = $fromDateTime;
@@ -32,6 +30,21 @@ class FromDateTimeQuery extends AbstractDateTimeQuery
         ]);
 
         return $dateTimeQuery;
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    {
+        $alias = $queryBuilder->getRootAliases()[0];
+        $expr = $queryBuilder->expr();
+
+        $queryBuilder
+            ->andWhere($expr->gte(
+                sprintf('%s.%s', $alias, $this->propertyName),
+                ':fromDateTime'
+            ))
+            ->setParameter('fromDateTime', $this->getDateTime());
+
+        return $queryBuilder->getQuery();
     }
 
     protected function getDateTime(): \DateTime

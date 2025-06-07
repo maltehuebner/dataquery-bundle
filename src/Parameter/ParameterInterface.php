@@ -2,7 +2,9 @@
 
 namespace MalteHuebner\DataQueryBundle\Parameter;
 
+use Doctrine\ORM\QueryBuilder;
 use Elastica\Query;
+use \Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 
 interface ParameterInterface
 {
@@ -11,4 +13,5 @@ interface ParameterInterface
     public function getEntityFqcn(): string;
     
     public function addToElasticQuery(Query $query): Query;
+    public function addToOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery;
 }

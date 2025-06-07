@@ -4,16 +4,11 @@ namespace MalteHuebner\DataQueryBundle\FieldList;
 
 abstract class AbstractField
 {
-    /** @var string $type */
-    protected $type;
+    protected ?string $type = null;
+    protected ?string $propertyName = null;
+    protected ?string $methodName = null;
 
-    /** @var string $propertyName */
-    protected $propertyName;
-
-    /** @var string $methodName */
-    protected $methodName;
-
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }

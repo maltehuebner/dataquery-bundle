@@ -2,23 +2,21 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use Doctrine\ORM\QueryBuilder;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
 use Symfony\Component\Validator\Constraints as Constraints;
+use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
 class DateQuery extends MonthQuery
 {
     #[Constraints\NotNull]
-    #[Constraints\Type("int")]
+    #[Constraints\Type('int')]
     #[Constraints\Range(min: 1, max: 31)]
     private ?int $day = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="day")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'day')]
     public function setDay(int $day): DateQuery
     {
         $this->day = $day;
@@ -39,6 +37,26 @@ class DateQuery extends MonthQuery
         ]);
 
         return $dateTimeQuery;
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    {
+        $alias = $queryBuilder->getRootAliases()[0];
+        $expr = $queryBuilder->expr();
+
+        $fromDateTime = DateTimeUtil::getDayStartDateTime($this->toDateTime());
+        $untilDateTime = DateTimeUtil::getDayEndDateTime($this->toDateTime());
+
+        $queryBuilder
+            ->andWhere($expr->between(
+                sprintf('%s.%s', $alias, $this->propertyName),
+                ':fromDateTime',
+                ':untilDateTime'
+            ))
+            ->setParameter('fromDateTime', $fromDateTime)
+            ->setParameter('untilDateTime', $untilDateTime);
+
+        return $queryBuilder->getQuery();
     }
 
     #[\Override]

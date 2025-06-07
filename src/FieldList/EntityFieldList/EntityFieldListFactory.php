@@ -2,25 +2,18 @@
 
 namespace MalteHuebner\DataQueryBundle\FieldList\EntityFieldList;
 
-use MalteHuebner\DataQueryBundle\Annotation\AnnotationInterface;
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\DateTimeQueryable;
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\DefaultBooleanValue;
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\Queryable;
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation\Sortable;
+use MalteHuebner\DataQueryBundle\Attribute\AttributeInterface;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute\DateTimeQueryable;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute\DefaultBooleanValue;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute\Queryable;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute\Sortable;
 use MalteHuebner\DataQueryBundle\Exception\NoReturnTypeForEntityMethodException;
-use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class EntityFieldListFactory implements EntityFieldListFactoryInterface
 {
     private string $entityFqcn;
 
     private EntityFieldList $entityFieldList;
-
-    public function __construct(
-        private readonly AnnotationReader $annotationReader
-    ) {
-
-    }
 
     #[\Override]
     public function createForFqcn(string $entityFqcn): EntityFieldList
@@ -38,16 +31,15 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
     {
         $reflectionClass = new \ReflectionClass($this->entityFqcn);
 
-        /** @var \ReflectionProperty $reflectionProperty */
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
-            $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($reflectionProperty);
+            foreach ($reflectionProperty->getAttributes() as $attribute) {
+                $instance = $attribute->newInstance();
 
-            foreach ($propertyAnnotations as $propertyAnnotation) {
-                if ($propertyAnnotation instanceof AnnotationInterface) {
+                if ($instance instanceof AttributeInterface) {
                     $entityField = new EntityField();
                     $entityField->setPropertyName($reflectionProperty->getName());
 
-                    $entityField = $this->processAnnotations($propertyAnnotation, $entityField);
+                    $entityField = $this->processAttributes($instance, $entityField);
 
                     $this->entityFieldList->addField($reflectionProperty->getName(), $entityField);
                 }
@@ -59,13 +51,11 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
     {
         $reflectionClass = new \ReflectionClass($this->entityFqcn);
 
-        /** @var \ReflectionMethod $reflectionMethod */
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-            $methodAnnotations = $this->annotationReader->getMethodAnnotations($reflectionMethod);
+            foreach ($reflectionMethod->getAttributes() as $attribute) {
+                $instance = $attribute->newInstance();
 
-            foreach ($methodAnnotations as $methodAnnotation) {
-                if ($methodAnnotation instanceof AnnotationInterface) {
-                    /** @var \ReflectionType $returnType */
+                if ($instance instanceof AttributeInterface) {
                     $returnType = $reflectionMethod->getReturnType();
 
                     if (!$returnType) {
@@ -77,7 +67,7 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
                         ->setMethodName($reflectionMethod->getName())
                         ->setType($returnType->getName());
 
-                    $entityField = $this->processAnnotations($methodAnnotation, $entityField);
+                    $entityField = $this->processAttributes($instance, $entityField);
 
                     $this->entityFieldList->addField($reflectionMethod->getName(), $entityField);
                 }
@@ -85,26 +75,26 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
         }
     }
 
-    protected function processAnnotations(AnnotationInterface $annotation, EntityField $entityField): EntityField
+    protected function processAttributes(AttributeInterface $attribute, EntityField $entityField): EntityField
     {
-        if ($annotation instanceof Sortable) {
+        if ($attribute instanceof Sortable) {
             $entityField->setSortable(true);
         }
 
-        if ($annotation instanceof Queryable) {
+        if ($attribute instanceof Queryable) {
             $entityField->setQueryable(true);
         }
 
-        if ($annotation instanceof DateTimeQueryable) {
+        if ($attribute instanceof DateTimeQueryable) {
             $entityField
-                ->setDateTimePattern($annotation->getPattern())
-                ->setDateTimeFormat($annotation->getFormat());
+                ->setDateTimePattern($attribute->getPattern())
+                ->setDateTimeFormat($attribute->getFormat());
         }
 
-        if ($annotation instanceof DefaultBooleanValue) {
+        if ($attribute instanceof DefaultBooleanValue) {
             $entityField
                 ->setDefaultQueryBool(true)
-                ->setDefaultQueryBoolValue($annotation->getValue());
+                ->setDefaultQueryBoolValue($attribute->getValue());
         }
 
         return $entityField;

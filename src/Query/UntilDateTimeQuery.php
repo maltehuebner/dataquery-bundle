@@ -2,21 +2,19 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use Doctrine\ORM\QueryBuilder;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
+use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
 class UntilDateTimeQuery extends AbstractDateTimeQuery
 {
     #[Constraints\NotNull]
-    #[Constraints\Type("int")]
+    #[Constraints\Type('int')]
     private ?int $untilDateTime = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="untilDateTime")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'untilDateTime')]
     public function setUntilDateTime(int $untilDateTime): UntilDateTimeQuery
     {
         $this->untilDateTime = $untilDateTime;
@@ -32,6 +30,21 @@ class UntilDateTimeQuery extends AbstractDateTimeQuery
         ]);
 
         return $dateTimeQuery;
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    {
+        $alias = $queryBuilder->getRootAliases()[0];
+        $expr = $queryBuilder->expr();
+
+        $queryBuilder
+            ->andWhere($expr->lte(
+                sprintf('%s.%s', $alias, $this->propertyName),
+                ':untilDateTime'
+            ))
+            ->setParameter('untilDateTime', $this->getDateTime());
+
+        return $queryBuilder->getQuery();
     }
 
     protected function getDateTime(): \DateTime
