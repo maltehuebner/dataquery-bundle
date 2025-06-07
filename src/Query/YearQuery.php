@@ -2,7 +2,6 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
@@ -53,7 +52,7 @@ class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, 
         ];
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $alias = $queryBuilder->getRootAliases()[0];
         $expr = $queryBuilder->expr();
@@ -70,6 +69,6 @@ class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, 
             ->setParameter('fromDateTime', $fromDateTime)
             ->setParameter('untilDateTime', $untilDateTime);
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }

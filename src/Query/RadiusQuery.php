@@ -5,7 +5,6 @@ namespace MalteHuebner\DataQueryBundle\Query;
 use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 
 #[DataQuery\RequiredEntityProperty(propertyName: 'pin', propertyType: 'string')]
 class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
@@ -62,7 +61,7 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
         return $geoQuery;
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $alias = $queryBuilder->getRootAliases()[0];
 
@@ -82,6 +81,6 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
             ->setParameter('radiusKm', $radius / 1000)
         ;
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }
