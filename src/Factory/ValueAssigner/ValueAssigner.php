@@ -32,20 +32,20 @@ class ValueAssigner implements ValueAssignerInterface
         $type = $queryField->getType();
 
         switch ($type) {
-            case 'float':
+            case ValueType::FLOAT:
                 $query->$methodName((float)$value);
                 break;
 
-            case 'int':
+            case ValueType::INT:
                 $value = $this->convertToInt($value, $queryField->getParameterName());
                 $query->$methodName($value);
                 break;
 
-            case 'string':
+            case ValueType::STRING:
                 $query->$methodName((string)$value);
                 break;
 
-            case 'mixed':
+            case ValueType::MIXED:
                 $query->$methodName($value);
                 break;
 
@@ -69,20 +69,20 @@ class ValueAssigner implements ValueAssignerInterface
         $type = $parameterField->getType();
 
         switch ($type) {
-            case 'float':
+            case ValueType::FLOAT:
                 $parameter->$methodName((float)$value);
                 break;
 
-            case 'int':
+            case ValueType::INT:
                 $value = $this->convertToInt($value, $parameterField->getParameterName());
                 $parameter->$methodName($value);
                 break;
 
-            case 'string':
+            case ValueType::STRING:
                 $parameter->$methodName((string)$value);
                 break;
 
-            case 'mixed':
+            case ValueType::MIXED:
                 $parameter->$methodName($value);
                 break;
         }
