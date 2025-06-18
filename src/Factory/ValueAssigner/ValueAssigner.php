@@ -112,13 +112,13 @@ class ValueAssigner implements ValueAssignerInterface
         return $query;
     }
 
-    protected function convertToInt(string $stringValue, string $parameterValue): int
+    protected function convertToInt(string $stringValue, string $parameterName): int
     {
-        // ^-?(\d+|\d{1,3}(?:\,\d{3})+)?(\.\d+)?$
-//        if (!ctype_digit($stringValue)) {
-        //          throw new ParameterConverterException('int', $stringValue, $parameterValue);
-        //    }
+        if (!preg_match('/^-?\d+$/', $stringValue)) {
+            throw new \InvalidArgumentException(sprintf('Parameter "%s" is not a valid integer: "%s"', $parameterName, $stringValue));
+        }
 
         return (int)$stringValue;
     }
+
 }
