@@ -2,7 +2,7 @@
 
 namespace MalteHuebner\DataQueryBundle\Factory\ValueAssigner;
 
-use MalteHuebner\DataQueryBundle\Factory\ParamConverterFactory\ParamConverterFactoryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList\ParameterField;
 use MalteHuebner\DataQueryBundle\FieldList\QueryFieldList\QueryField;
 use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ValueAssigner implements ValueAssignerInterface
 {
-    public function __construct(private readonly ParamConverterFactoryInterface $paramConverterFactory)
+    public function __construct(private readonly ManagerRegistry $managerRegistry)
     {
 
     }
@@ -50,7 +50,7 @@ class ValueAssigner implements ValueAssignerInterface
                 break;
 
             default:
-                $query = $this->assignEntityValueFromParamConverter($requestParameterList, $query, $queryField);
+                $query = $this->assignEntityValueFromRepository($requestParameterList, $query, $queryField);
                 break;
         }
 
@@ -90,6 +90,7 @@ class ValueAssigner implements ValueAssignerInterface
         return $parameter;
     }
 
+    /** @deprecated */
     protected function assignEntityValueFromParamConverter(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
     {
         if ($converter = $this->paramConverterFactory->createParamConverter($queryField->getType())) {
@@ -108,6 +109,34 @@ class ValueAssigner implements ValueAssignerInterface
 
             $query->$methodName($request->get($newParameterName));
         }
+
+        return $query;
+    }
+
+    protected function assignEntityValueFromRepository(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
+    {
+        $parameterName = $queryField->getParameterName();
+        $entityClass = $queryField->getType();
+        $methodName = $queryField->getMethodName();
+
+        if (!$requestParameterList->has($parameterName)) {
+            return $query;
+        }
+
+        $id = $requestParameterList->get($parameterName);
+        $entityManager = $this->managerRegistry->getManagerForClass($entityClass);
+
+        if (!$entityManager) {
+            throw new \RuntimeException(sprintf('No entity manager found for class %s', $entityClass));
+        }
+
+        $entity = $entityManager->getRepository($entityClass)->find($id);
+
+        if (null === $entity) {
+            return $query;
+        }
+
+        $query->$methodName($entity);
 
         return $query;
     }
