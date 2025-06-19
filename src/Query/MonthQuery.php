@@ -6,7 +6,6 @@ use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
 use Symfony\Component\Validator\Constraints as Constraints;
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 
 #[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
 class MonthQuery extends YearQuery
@@ -39,7 +38,7 @@ class MonthQuery extends YearQuery
         return $dateTimeQuery;
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $alias = $queryBuilder->getRootAliases()[0];
         $expr = $queryBuilder->expr();
@@ -56,7 +55,7 @@ class MonthQuery extends YearQuery
             ->setParameter('fromDateTime', $fromDateTime)
             ->setParameter('untilDateTime', $untilDateTime);
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 
     #[\Override]

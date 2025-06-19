@@ -5,6 +5,7 @@ namespace MalteHuebner\DataQueryBundle\Finder;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\ElasticaBundle\Repository;
 use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
+use MalteHuebner\DataQueryBundle\Parameter\SizeParameter;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\QueryInterface;
@@ -22,7 +23,15 @@ class Finder implements FinderInterface
     #[\Override]
     public function executeQuery(array $queryList, array $parameterList): array
     {
-        return $this->executeElasticQuery($queryList, $parameterList);
+        if ($this->entityManager) {
+            return $this->executeOrmQuery($queryList, $parameterList);
+        }
+
+        if ($this->repository) {
+            return $this->executeElasticQuery($queryList, $parameterList);
+        }
+
+        return [];
     }
 
     protected function executeElasticQuery(array $queryList, array $parameterList): array
@@ -45,28 +54,46 @@ class Finder implements FinderInterface
             }
         }
 
-        //dump(json_encode($query->toArray()));
-
         return $this->repository->find($query);
     }
 
-    protected function executeOrmQuery(array $queryList): array
+    protected function executeOrmQuery(array $queryList, array $parameterList): array
     {
         $qb = $this->entityManager->createQueryBuilder()
             ->select('e')
-            ->from($this->fqcn, 'e');
+            ->from($this->fqcn, 'e')
+        ;
 
         /** @var OrmQueryInterface $query */
         foreach ($queryList as $query) {
-            if ($query instanceof OrmQueryInterface && method_exists($query, 'setQueryBuilder')) {
-                $query->setQueryBuilder($qb);
-                $query->createOrmQuery(); // verändert den $qb
+            if ($query instanceof OrmQueryInterface) {
+                $qb = $query->createOrmQuery($qb);
             }
         }
 
-        /** @var AbstractOrmQuery $finalQuery */
-        $finalQuery = $qb->getQuery();
+        $hasSizeParameter = false;
+        $finalQuery = null;
 
-        return $finalQuery->getResult();
+        /** @var ParameterInterface $parameter */
+        foreach ($parameterList as $parameter) {
+            if ($parameter instanceof SizeParameter) {
+                $hasSizeParameter = true;
+            }
+
+            if ($parameter instanceof ParameterInterface && method_exists($parameter, 'addToOrmQuery')) {
+                $result = $parameter->addToOrmQuery($qb);
+
+                if ($result instanceof AbstractOrmQuery) {
+                    $finalQuery = $result;
+                }
+            }
+        }
+
+        // by default, ElasticSearch returns 10 results, but in ORM we set the max results to 10
+        if (!$hasSizeParameter) {
+            $qb->setMaxResults(10);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

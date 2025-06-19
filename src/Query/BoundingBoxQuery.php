@@ -2,7 +2,6 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use MalteHuebner\DataQueryBundle\Validator\Constraint\BoundingBoxValues;
@@ -116,7 +115,7 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface, O
         return $geoQuery;
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $alias = $queryBuilder->getRootAliases()[0];
         $expr = $queryBuilder->expr();
@@ -140,6 +139,6 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface, O
             ->setParameter('eastLongitude', $this->eastLongitude)
         ;
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }

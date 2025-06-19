@@ -64,6 +64,7 @@ class QueryFactory implements QueryFactoryInterface
     protected function checkForQuery(string $queryFqcn, RequestParameterList $requestParameterList): ?QueryInterface
     {
         $query = new $queryFqcn();
+        $query->setEntityFqcn($this->entityFqcn);
 
         $queryFieldList = $this->queryFieldListFactory->createForFqcn($queryFqcn);
         $entityFieldList = $this->entityFieldListFactory->createForFqcn($this->entityFqcn);

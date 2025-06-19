@@ -2,7 +2,6 @@
 
 namespace MalteHuebner\DataQueryBundle\Query;
 
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Validator\Constraints as Constraints;
 
@@ -46,7 +45,7 @@ class BooleanQuery extends AbstractQuery implements OrmQueryInterface, ElasticQu
         return new \Elastica\Query\Term([$this->propertyName => $this->value]);
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $alias = $queryBuilder->getRootAliases()[0];
         $parameterName = $this->propertyName . '_value';
@@ -56,6 +55,6 @@ class BooleanQuery extends AbstractQuery implements OrmQueryInterface, ElasticQu
             ->setParameter($parameterName, $this->value)
         ;
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }
