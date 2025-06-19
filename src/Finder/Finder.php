@@ -14,8 +14,8 @@ class Finder implements FinderInterface
 {
     public function __construct(
         private readonly string $fqcn,
-        private readonly Repository $repository,
-        private readonly EntityManagerInterface $entityManager
+        private readonly ?Repository $repository = null,
+        private readonly ?EntityManagerInterface $entityManager = null
     ) {
 
     }
