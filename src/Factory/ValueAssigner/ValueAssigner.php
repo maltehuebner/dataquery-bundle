@@ -90,29 +90,6 @@ class ValueAssigner implements ValueAssignerInterface
         return $parameter;
     }
 
-    /** @deprecated */
-    protected function assignEntityValueFromParamConverter(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
-    {
-        if ($converter = $this->paramConverterFactory->createParamConverter($queryField->getType())) {
-            $methodName = $queryField->getMethodName();
-            $newParameterName = ClassUtil::getLowercaseShortnameFromFqcn($queryField->getType());
-
-            $paramConverterConfiguration = new ParamConverter(['name' => $newParameterName]);
-
-            $request = new Request($requestParameterList->getList());
-
-            try {
-                $converter->apply($request, $paramConverterConfiguration);
-            } catch (NotFoundHttpException) {
-                return $query;
-            }
-
-            $query->$methodName($request->get($newParameterName));
-        }
-
-        return $query;
-    }
-
     protected function assignEntityValueFromRepository(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
     {
         $parameterName = $queryField->getParameterName();
