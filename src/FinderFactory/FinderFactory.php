@@ -2,16 +2,14 @@
 
 namespace MalteHuebner\DataQueryBundle\FinderFactory;
 
-use Doctrine\ORM\EntityManagerInterface;
-use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use MalteHuebner\DataQueryBundle\Finder\Finder;
 use MalteHuebner\DataQueryBundle\Finder\FinderInterface;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class FinderFactory implements FinderFactoryInterface
 {
     public function __construct(
-        private readonly RepositoryManagerInterface $repositoryManager,
-        private readonly EntityManagerInterface $entityManager
+        private readonly ServiceLocator $locator
     ) {
 
     }
@@ -19,18 +17,29 @@ class FinderFactory implements FinderFactoryInterface
     #[\Override]
     public function createFinderForFqcn(string $fqcn): FinderInterface
     {
-        $reflectionClass = new \ReflectionClass($fqcn);
+        $entityManager = $this->locator->has(\Doctrine\ORM\EntityManagerInterface::class)
+            ? $this->locator->get(\Doctrine\ORM\EntityManagerInterface::class)
+            : null;
 
-        $schema = 'criticalmass_%s';
+        $repositoryManager = $this->locator->has(\FOS\ElasticaBundle\Manager\RepositoryManagerInterface::class)
+            ? $this->locator->get(\FOS\ElasticaBundle\Manager\RepositoryManagerInterface::class)
+            : null;
 
-        $indexName = sprintf($schema, strtolower($reflectionClass->getShortName()));
+        $repository = null;
 
-        if ($this->repositoryManager->hasRepository($indexName)) {
-            $repository = $this->repositoryManager->getRepository($indexName);
+        if ($repositoryManager !== null) {
+            $shortName = (new \ReflectionClass($fqcn))->getShortName();
+            $indexName = sprintf('criticalmass_%s', strtolower($shortName));
 
-            return new Finder($fqcn, $repository, $this->entityManager);
+            if ($repositoryManager->hasRepository($indexName)) {
+                $repository = $repositoryManager->getRepository($indexName);
+            }
         }
 
-        throw new \Exception(sprintf('Could not find repository for entity "%s", looked for "%s"', $fqcn, $indexName));
+        if ($repository === null && $entityManager === null) {
+            throw new \RuntimeException('Weder Doctrine noch Elastica verfügbar.');
+        }
+
+        return new Finder($fqcn, $repository, $entityManager);
     }
 }

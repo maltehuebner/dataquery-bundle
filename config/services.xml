@@ -6,7 +6,17 @@
     <services>
         <defaults autowire="true" autoconfigure="true" public="true"/>
 
-        <prototype namespace="MalteHuebner\DataQueryBundle\" resource="../src/{Annotation,DataQueryManager,Factory,FieldList,FinderFactory,Manager,Parameter,Query,RequestParamterList,Validator}" exclude="../src/{DependencyInjection,tests,MalteHuebnerDataQueryBundle}"/>
-        <service id="MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface" class="MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManager" />
+        <prototype namespace="MalteHuebner\DataQueryBundle\" resource="../src/{DataQueryManager,Factory,FieldList,FinderFactory,Manager,Parameter,Query,RequestParamterList,Validator}" exclude="../src/{DependencyInjection,tests,MalteHuebnerDataQueryBundle}"/>
+
+        <service id="Psr\Container\ContainerInterface" alias="service_container" />
+
+        <service id="MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface" class="MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManager"/>
+
+        <service id="MalteHuebner\DataQueryBundle\FinderFactory\FinderFactory">
+            <argument type="service_locator">
+                <argument key="Doctrine\ORM\EntityManagerInterface" type="service" id="doctrine.orm.entity_manager" on-invalid="null"/>
+                <argument key="FOS\ElasticaBundle\Manager\RepositoryManagerInterface" type="service" id="fos_elastica.manager" on-invalid="null"/>
+            </argument>
+        </service>
     </services>
 </container>
