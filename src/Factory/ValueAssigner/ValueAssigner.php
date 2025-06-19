@@ -2,7 +2,7 @@
 
 namespace MalteHuebner\DataQueryBundle\Factory\ValueAssigner;
 
-use MalteHuebner\DataQueryBundle\Factory\ParamConverterFactory\ParamConverterFactoryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList\ParameterField;
 use MalteHuebner\DataQueryBundle\FieldList\QueryFieldList\QueryField;
 use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ValueAssigner implements ValueAssignerInterface
 {
-    public function __construct(private readonly ParamConverterFactoryInterface $paramConverterFactory)
+    public function __construct(private readonly ManagerRegistry $managerRegistry)
     {
 
     }
@@ -32,25 +32,25 @@ class ValueAssigner implements ValueAssignerInterface
         $type = $queryField->getType();
 
         switch ($type) {
-            case 'float':
+            case ValueType::FLOAT:
                 $query->$methodName((float)$value);
                 break;
 
-            case 'int':
+            case ValueType::INT:
                 $value = $this->convertToInt($value, $queryField->getParameterName());
                 $query->$methodName($value);
                 break;
 
-            case 'string':
+            case ValueType::STRING:
                 $query->$methodName((string)$value);
                 break;
 
-            case 'mixed':
+            case ValueType::MIXED:
                 $query->$methodName($value);
                 break;
 
             default:
-                $query = $this->assignEntityValueFromParamConverter($requestParameterList, $query, $queryField);
+                $query = $this->assignEntityValueFromRepository($requestParameterList, $query, $queryField);
                 break;
         }
 
@@ -69,20 +69,20 @@ class ValueAssigner implements ValueAssignerInterface
         $type = $parameterField->getType();
 
         switch ($type) {
-            case 'float':
+            case ValueType::FLOAT:
                 $parameter->$methodName((float)$value);
                 break;
 
-            case 'int':
+            case ValueType::INT:
                 $value = $this->convertToInt($value, $parameterField->getParameterName());
                 $parameter->$methodName($value);
                 break;
 
-            case 'string':
+            case ValueType::STRING:
                 $parameter->$methodName((string)$value);
                 break;
 
-            case 'mixed':
+            case ValueType::MIXED:
                 $parameter->$methodName($value);
                 break;
         }
@@ -90,35 +90,41 @@ class ValueAssigner implements ValueAssignerInterface
         return $parameter;
     }
 
-    protected function assignEntityValueFromParamConverter(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
+    protected function assignEntityValueFromRepository(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
     {
-        if ($converter = $this->paramConverterFactory->createParamConverter($queryField->getType())) {
-            $methodName = $queryField->getMethodName();
-            $newParameterName = ClassUtil::getLowercaseShortnameFromFqcn($queryField->getType());
+        $parameterName = $queryField->getParameterName();
+        $entityClass = $queryField->getType();
+        $methodName = $queryField->getMethodName();
 
-            $paramConverterConfiguration = new ParamConverter(['name' => $newParameterName]);
-
-            $request = new Request($requestParameterList->getList());
-
-            try {
-                $converter->apply($request, $paramConverterConfiguration);
-            } catch (NotFoundHttpException) {
-                return $query;
-            }
-
-            $query->$methodName($request->get($newParameterName));
+        if (!$requestParameterList->has($parameterName)) {
+            return $query;
         }
+
+        $id = $requestParameterList->get($parameterName);
+        $entityManager = $this->managerRegistry->getManagerForClass($entityClass);
+
+        if (!$entityManager) {
+            throw new \RuntimeException(sprintf('No entity manager found for class %s', $entityClass));
+        }
+
+        $entity = $entityManager->getRepository($entityClass)->find($id);
+
+        if (null === $entity) {
+            return $query;
+        }
+
+        $query->$methodName($entity);
 
         return $query;
     }
 
-    protected function convertToInt(string $stringValue, string $parameterValue): int
+    protected function convertToInt(string $stringValue, string $parameterName): int
     {
-        // ^-?(\d+|\d{1,3}(?:\,\d{3})+)?(\.\d+)?$
-//        if (!ctype_digit($stringValue)) {
-        //          throw new ParameterConverterException('int', $stringValue, $parameterValue);
-        //    }
+        if (!preg_match('/^-?\d+$/', $stringValue)) {
+            throw new \InvalidArgumentException(sprintf('Parameter "%s" is not a valid integer: "%s"', $parameterName, $stringValue));
+        }
 
         return (int)$stringValue;
     }
+
 }
