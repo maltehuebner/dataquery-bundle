@@ -35,10 +35,14 @@ class QueryFieldListFactory implements QueryFieldListFactoryInterface
                 $queryField = new QueryField();
                 $queryField
                     ->setPropertyName($reflectionProperty->getName())
-                    ->setParameterName($instance->getParameterName());
+                    ->setParameterName($instance->getParameterName())
+                    ->setRepository($instance->getRepository())
+                    ->setRepositoryMethod($instance->getRepositoryMethod())
+                    ->setAccessor($instance->getAccessor())
+                ;
 
-                // Optional: Typ holen (ab PHP 7.4+ möglich)
                 $type = $reflectionProperty->getType();
+
                 if ($type) {
                     $queryField->setType($type->getName());
                 }
@@ -71,7 +75,11 @@ class QueryFieldListFactory implements QueryFieldListFactoryInterface
                 $queryField
                     ->setMethodName($reflectionMethod->getName())
                     ->setParameterName($instance->getParameterName())
-                    ->setType($reflectionType->getName());
+                    ->setType($reflectionType->getName())
+                    ->setRepository($instance->getRepository())
+                    ->setRepositoryMethod($instance->getRepositoryMethod())
+                    ->setAccessor($instance->getAccessor())
+                ;
 
                 $this->queryFieldList->addField($reflectionMethod->getName(), $queryField);
             }

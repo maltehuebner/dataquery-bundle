@@ -14,7 +14,6 @@ use MalteHuebner\DataQueryBundle\Query\DateTimeQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\QueryInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

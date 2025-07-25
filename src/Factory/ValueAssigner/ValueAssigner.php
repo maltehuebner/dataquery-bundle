@@ -8,14 +8,12 @@ use MalteHuebner\DataQueryBundle\FieldList\QueryFieldList\QueryField;
 use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
 use MalteHuebner\DataQueryBundle\Query\QueryInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
-use App\Criticalmass\Util\ClassUtil;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ValueAssigner implements ValueAssignerInterface
 {
-    public function __construct(private readonly ManagerRegistry $managerRegistry)
+    public function __construct(
+        private readonly ManagerRegistry $managerRegistry
+    )
     {
 
     }
@@ -94,26 +92,42 @@ class ValueAssigner implements ValueAssignerInterface
     {
         $parameterName = $queryField->getParameterName();
         $entityClass = $queryField->getType();
-        $methodName = $queryField->getMethodName();
 
         if (!$requestParameterList->has($parameterName)) {
             return $query;
         }
 
-        $id = $requestParameterList->get($parameterName);
-        $entityManager = $this->managerRegistry->getManagerForClass($entityClass);
+        $queryParameterValue = $requestParameterList->get($parameterName);
 
-        if (!$entityManager) {
-            throw new \RuntimeException(sprintf('No entity manager found for class %s', $entityClass));
+        if ($queryField->getRepository()) {
+            $repository = $this->managerRegistry->getRepository($queryField->getRepository());
+        } else {
+            $repository = $this->managerRegistry->getRepository($entityClass);
         }
 
-        $entity = $entityManager->getRepository($entityClass)->find($id);
+        if (!$repository) {
+            throw new \RuntimeException(sprintf('No repository found for class %s', $entityClass));
+        }
+
+        if ($queryField->getRepositoryMethod()) {
+            $methodName = $queryField->getRepositoryMethod();
+        } else {
+            $methodName = 'find';
+        }
+
+        $entity = $repository->$methodName($queryParameterValue);
+
+        if ($queryField->getAccessor()) {
+            $accessMethodName = $queryField->getAccessor();
+            $entity = $entity->$accessMethodName();
+        }
 
         if (null === $entity) {
             return $query;
         }
 
-        $query->$methodName($entity);
+        $setMethodName = $queryField->getMethodName();
+        $query->$setMethodName($entity);
 
         return $query;
     }
@@ -126,5 +140,4 @@ class ValueAssigner implements ValueAssignerInterface
 
         return (int)$stringValue;
     }
-
 }
