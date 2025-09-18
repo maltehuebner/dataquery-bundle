@@ -7,7 +7,7 @@ use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 #[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
-class FromDateTimeQuery extends AbstractDateTimeQuery
+class FromDateTimeQuery extends AbstractDateTimeQuery implements OrmQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
     #[Constraints\Type('int')]
