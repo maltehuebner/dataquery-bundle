@@ -17,7 +17,8 @@
         "phpunit/phpunit": "^9.5",
         "rector/rector": "^1.2",
         "doctrine/orm": "^3.6",
-        "doctrine/persistence": "^4.1"
+        "doctrine/persistence": "^4.1",
+        "phpstan/phpstan": "^1.12"
     },
     "autoload": {
         "psr-4": {
@@ -37,6 +38,7 @@
     ],
     "minimum-stability": "stable",
     "scripts": {
-        "tests": "phpunit"
+        "tests": "phpunit",
+        "phpstan": "phpstan analyse"
     }
 }

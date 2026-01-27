@@ -1,0 +1,146 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to method load\\(\\) on an unknown class Symfony\\\\Component\\\\DependencyInjection\\\\Loader\\\\XmlFileLoader\\.$#"
+			count: 1
+			path: src/DependencyInjection/MalteHuebnerDataQueryExtension.php
+
+		-
+			message: "#^Instantiated class Symfony\\\\Component\\\\DependencyInjection\\\\Loader\\\\XmlFileLoader not found\\.$#"
+			count: 1
+			path: src/DependencyInjection/MalteHuebnerDataQueryExtension.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#3 \\$parameterName \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: src/Exception/ParameterConverterException.php
+
+		-
+			message: "#^Call to static method getShortnameFromFqcn\\(\\) on an unknown class App\\\\Criticalmass\\\\Util\\\\ClassUtil\\.$#"
+			count: 1
+			path: src/Factory/ConflictResolver/ConflictResolver.php
+
+		-
+			message: "#^Variable \\$parameter in PHPDoc tag @var does not match any variable in the foreach loop\\: \\$parameterCandidate$#"
+			count: 1
+			path: src/Factory/ParameterFactory/ParameterFactory.php
+
+		-
+			message: "#^Variable \\$parameterField in PHPDoc tag @var does not match any variable in the foreach loop\\: \\$fieldName, \\$parameterFields$#"
+			count: 1
+			path: src/Factory/ParameterFactory/ParameterFactory.php
+
+		-
+			message: "#^Call to static method getShortname\\(\\) on an unknown class App\\\\Criticalmass\\\\Util\\\\ClassUtil\\.$#"
+			count: 1
+			path: src/Factory/QueryFactory/QueryFactory.php
+
+		-
+			message: "#^Variable \\$entityField in PHPDoc tag @var does not match any variable in the foreach loop\\: \\$entityFields$#"
+			count: 1
+			path: src/Factory/QueryFactory/QueryFactory.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/Factory/ValueAssigner/ValueAssigner.php
+
+		-
+			message: "#^Call to an undefined method ReflectionType\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: src/FieldList/EntityFieldList/EntityFieldListFactory.php
+
+		-
+			message: "#^Call to an undefined method ReflectionType\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: src/FieldList/ParameterFieldList/ParameterFieldListFactory.php
+
+		-
+			message: "#^Call to an undefined method MalteHuebner\\\\DataQueryBundle\\\\FieldList\\\\AbstractField\\:\\:setParameterName\\(\\)\\.$#"
+			count: 2
+			path: src/FieldList/QueryFieldList/QueryFieldListFactory.php
+
+		-
+			message: "#^Call to an undefined method ReflectionType\\:\\:getName\\(\\)\\.$#"
+			count: 2
+			path: src/FieldList/QueryFieldList/QueryFieldListFactory.php
+
+		-
+			message: "#^Call to method find\\(\\) on an unknown class FOS\\\\ElasticaBundle\\\\Repository\\.$#"
+			count: 1
+			path: src/Finder/Finder.php
+
+		-
+			message: "#^Class MalteHuebner\\\\DataQueryBundle\\\\Finder\\\\AbstractOrmQuery not found\\.$#"
+			count: 1
+			path: src/Finder/Finder.php
+
+		-
+			message: "#^Parameter \\$repository of method MalteHuebner\\\\DataQueryBundle\\\\Finder\\\\Finder\\:\\:__construct\\(\\) has invalid type FOS\\\\ElasticaBundle\\\\Repository\\.$#"
+			count: 1
+			path: src/Finder/Finder.php
+
+		-
+			message: "#^Property MalteHuebner\\\\DataQueryBundle\\\\Finder\\\\Finder\\:\\:\\$repository has unknown class FOS\\\\ElasticaBundle\\\\Repository as its type\\.$#"
+			count: 1
+			path: src/Finder/Finder.php
+
+		-
+			message: "#^Class FOS\\\\ElasticaBundle\\\\Manager\\\\RepositoryManagerInterface not found\\.$#"
+			count: 2
+			path: src/FinderFactory/FinderFactory.php
+
+		-
+			message: "#^Cannot call method addMust\\(\\) on array\\<string, array\\<string, mixed\\>\\>\\|Elastica\\\\Query\\\\AbstractQuery\\.$#"
+			count: 1
+			path: src/Parameter/StartValueParameter.php
+
+		-
+			message: "#^Call to static method getDayEndDateTime\\(\\) on an unknown class App\\\\Criticalmass\\\\Util\\\\DateTimeUtil\\.$#"
+			count: 2
+			path: src/Query/DateQuery.php
+
+		-
+			message: "#^Call to static method getDayStartDateTime\\(\\) on an unknown class App\\\\Criticalmass\\\\Util\\\\DateTimeUtil\\.$#"
+			count: 2
+			path: src/Query/DateQuery.php
+
+		-
+			message: "#^Call to static method getMonthEndDateTime\\(\\) on an unknown class App\\\\Criticalmass\\\\Util\\\\DateTimeUtil\\.$#"
+			count: 2
+			path: src/Query/MonthQuery.php
+
+		-
+			message: "#^Call to static method getMonthStartDateTime\\(\\) on an unknown class App\\\\Criticalmass\\\\Util\\\\DateTimeUtil\\.$#"
+			count: 2
+			path: src/Query/MonthQuery.php
+
+		-
+			message: "#^Call to static method getYearEndDateTime\\(\\) on an unknown class App\\\\Criticalmass\\\\Util\\\\DateTimeUtil\\.$#"
+			count: 2
+			path: src/Query/YearQuery.php
+
+		-
+			message: "#^Call to static method getYearStartDateTime\\(\\) on an unknown class App\\\\Criticalmass\\\\Util\\\\DateTimeUtil\\.$#"
+			count: 2
+			path: src/Query/YearQuery.php
+
+		-
+			message: "#^Access to an undefined property Symfony\\\\Component\\\\Validator\\\\Constraint\\:\\:\\$message\\.$#"
+			count: 2
+			path: src/Validator/BoundingBoxValidator.php
+
+		-
+			message: "#^PHPDoc tag @var above a method has no effect\\.$#"
+			count: 1
+			path: src/Validator/BoundingBoxValidator.php
+
+		-
+			message: "#^Access to an undefined property Symfony\\\\Component\\\\Validator\\\\Constraint\\:\\:\\$message\\.$#"
+			count: 1
+			path: src/Validator/SortableValidator.php
+
+		-
+			message: "#^Variable \\$fieldList in PHPDoc tag @var does not match assigned variable \\$entityFieldList\\.$#"
+			count: 1
+			path: src/Validator/SortableValidator.php
