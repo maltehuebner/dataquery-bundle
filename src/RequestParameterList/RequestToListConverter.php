@@ -16,7 +16,11 @@ class RequestToListConverter
         $requestParameterList = new RequestParameterList();
 
         foreach ($request->query->all() as $key => $value) {
-            $requestParameterList->add($key, $value);
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $requestParameterList->add($key, (string) $value);
         }
 
         return $requestParameterList;
