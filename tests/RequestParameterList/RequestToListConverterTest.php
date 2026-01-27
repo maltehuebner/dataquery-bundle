@@ -29,22 +29,22 @@ class RequestToListConverterTest extends TestCase
         $this->assertSame([], $result->getList());
     }
 
-    public function testConvertRequestWithArrayQueryParameterThrowsTypeError(): void
+    public function testConvertRequestWithArrayQueryParameter(): void
     {
-        $this->expectException(\TypeError::class);
-
         $request = Request::create('/test', 'GET', ['tags' => ['foo', 'bar']]);
 
-        RequestToListConverter::convert($request);
+        $result = RequestToListConverter::convert($request);
+
+        $this->assertSame('foo,bar', $result->get('tags'));
     }
 
-    public function testConvertRequestWithIntegerQueryParameterThrowsTypeError(): void
+    public function testConvertRequestWithIntegerQueryParameter(): void
     {
-        $this->expectException(\TypeError::class);
-
         $request = Request::create('/test', 'GET', ['size' => 25]);
 
-        RequestToListConverter::convert($request);
+        $result = RequestToListConverter::convert($request);
+
+        $this->assertSame('25', $result->get('size'));
     }
 
     public function testConvertRequestWithMultipleParameters(): void
