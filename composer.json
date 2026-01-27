@@ -35,5 +35,8 @@
             "email": "maltehuebner@gmx.org"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "scripts": {
+        "tests": "phpunit"
+    }
 }
