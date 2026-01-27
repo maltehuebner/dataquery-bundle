@@ -48,12 +48,11 @@ class QueryStringToListConverterTest extends TestCase
         $this->assertSame('München', $result->get('city'));
     }
 
-    public function testConvertQueryStringWithArrayParameters(): void
+    public function testConvertQueryStringWithArrayParametersThrowsTypeError(): void
     {
-        $result = QueryStringToListConverter::convert('tags[]=foo&tags[]=bar');
+        $this->expectException(\TypeError::class);
 
-        $this->assertTrue($result->has('tags'));
-        $this->assertSame('foo,bar', $result->get('tags'));
+        QueryStringToListConverter::convert('tags[]=foo&tags[]=bar');
     }
 
     public function testConvertQueryStringWithMultipleParameters(): void
