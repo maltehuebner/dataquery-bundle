@@ -16,7 +16,7 @@ class MalteHuebnerDataQueryExtension extends Extension
         $configuration = new Configuration(false);
         $config = $this->processConfiguration($configuration, $configs);
 
-        $xmlLoader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-        $xmlLoader->load('services.xml');
+        $yamlLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
+        $yamlLoader->load('services.yaml');
     }
 }

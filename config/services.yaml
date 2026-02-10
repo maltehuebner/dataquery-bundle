@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    MalteHuebner\DataQueryBundle\:
+        resource: '../src/{DataQueryManager,Factory,FieldList,FinderFactory,Manager,Parameter,Query,RequestParamterList,Validator}'
+        exclude: '../src/{DependencyInjection,tests,MalteHuebnerDataQueryBundle}'
+
+    Psr\Container\ContainerInterface:
+        alias: service_container
+
+    MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface:
+        class: MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManager
+
+    MalteHuebner\DataQueryBundle\FinderFactory\FinderFactory:
+        arguments:
+            - !service_locator
+                Doctrine\ORM\EntityManagerInterface: '@?doctrine.orm.entity_manager'
+                FOS\ElasticaBundle\Manager\RepositoryManagerInterface: '@?fos_elastica.manager'
