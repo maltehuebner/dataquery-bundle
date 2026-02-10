@@ -6,7 +6,7 @@ services:
 
     MalteHuebner\DataQueryBundle\:
         resource: '../src/{DataQueryManager,Factory,FieldList,FinderFactory,Manager,Parameter,Query,RequestParamterList,Validator}'
-        exclude: '../src/{DependencyInjection,tests,MalteHuebnerDataQueryBundle}'
+        exclude: '../src/{DependencyInjection,Factory/ConflictResolver,tests,MalteHuebnerDataQueryBundle}'
 
     Psr\Container\ContainerInterface:
         alias: service_container
