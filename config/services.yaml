@@ -5,8 +5,8 @@ services:
         public: true
 
     MalteHuebner\DataQueryBundle\:
-        resource: '../src/{DataQueryManager,Factory,FieldList,FinderFactory,Manager,Parameter,Query,RequestParamterList,Validator}'
-        exclude: '../src/{DependencyInjection,Factory/ConflictResolver,tests,MalteHuebnerDataQueryBundle}'
+        resource: '../src/{DataQueryManager,Factory,FieldList,FinderFactory,Manager,Parameter,Query,RequestParameterList,Validator}'
+        exclude: '../src/{DependencyInjection,Factory/ConflictResolver,Factory/ValueAssigner/ValueType.php,RequestParameterList/ArrayToListConverter.php,RequestParameterList/QueryStringToListConverter.php,RequestParameterList/RequestToListConverter.php,tests,MalteHuebnerDataQueryBundle}'
 
     Psr\Container\ContainerInterface:
         alias: service_container
