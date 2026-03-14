@@ -272,4 +272,41 @@ class ValueAssignerTest extends TestCase
 
         $this->assertTrue(true);
     }
+
+    public function testConvertToIntTrimsWhitespace(): void
+    {
+        $list = new RequestParameterList();
+        $list->add('fromDateTime', ' 1711922400');
+
+        $query = new \MalteHuebner\DataQueryBundle\Query\FromDateTimeQuery();
+
+        $queryField = new QueryField();
+        $queryField
+            ->setMethodName('setFromDateTime')
+            ->setParameterName('fromDateTime')
+            ->setType(ValueType::INT);
+
+        $this->valueAssigner->assignQueryPropertyValueFromRequest($list, $query, $queryField);
+
+        $this->assertTrue(true);
+    }
+
+    public function testConvertToIntTrimsWhitespaceForParameter(): void
+    {
+        $list = new RequestParameterList();
+        $list->add('size', ' 25 ');
+
+        $parameter = new SizeParameter();
+        $parameter->setEntityFqcn('App\\Entity\\Test');
+
+        $parameterField = new ParameterField();
+        $parameterField
+            ->setMethodName('setSize')
+            ->setParameterName('size')
+            ->setType(ValueType::INT);
+
+        $this->valueAssigner->assignParameterPropertyValueFromRequest($list, $parameter, $parameterField);
+
+        $this->assertTrue(true);
+    }
 }
