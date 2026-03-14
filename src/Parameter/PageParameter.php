@@ -8,36 +8,43 @@ use Doctrine\ORM\QueryBuilder;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-class SizeParameter extends AbstractParameter
+class PageParameter extends AbstractParameter
 {
     #[Constraints\NotNull]
     #[Constraints\Type('int')]
-    #[Constraints\Range(min: 1, max: 500)]
-    protected int $size;
+    #[Constraints\Range(min: 0)]
+    private int $page;
 
-    #[DataQuery\RequiredParameter(parameterName: 'size')]
-    public function setSize(int $size): SizeParameter
+    private int $size = 10;
+
+    #[DataQuery\RequiredParameter(parameterName: 'page')]
+    public function setPage(int $page): PageParameter
     {
-        $this->size = $size;
-
+        $this->page = $page;
         return $this;
     }
 
-    public function getSize(): int
+    public function getPage(): int
     {
-        return $this->size;
+        return $this->page;
+    }
+
+    public function setPageSize(int $size): PageParameter
+    {
+        $this->size = $size;
+        return $this;
     }
 
     #[\Override]
     public function addToElasticQuery(Query $query): Query
     {
-        return $query->setSize($this->size);
+        return $query->setFrom($this->page * $this->size);
     }
 
     #[\Override]
     public function addToOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
     {
-        $queryBuilder->setMaxResults($this->size);
+        $queryBuilder->setFirstResult($this->page * $this->size);
 
         return $queryBuilder->getQuery();
     }
