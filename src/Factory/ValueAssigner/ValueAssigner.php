@@ -134,6 +134,8 @@ class ValueAssigner implements ValueAssignerInterface
 
     protected function convertToInt(string $stringValue, string $parameterName): int
     {
+        $stringValue = trim($stringValue);
+
         if (!preg_match('/^-?\d+$/', $stringValue)) {
             throw new \InvalidArgumentException(sprintf('Parameter "%s" is not a valid integer: "%s"', $parameterName, $stringValue));
         }
