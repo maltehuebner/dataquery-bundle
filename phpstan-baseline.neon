@@ -56,6 +56,11 @@ parameters:
 			path: src/FieldList/QueryFieldList/QueryFieldListFactory.php
 
 		-
+			message: "#^Call to method createPaginatorAdapter\\(\\) on an unknown class FOS\\\\ElasticaBundle\\\\Repository\\.$#"
+			count: 1
+			path: src/Finder/Finder.php
+
+		-
 			message: "#^Call to method find\\(\\) on an unknown class FOS\\\\ElasticaBundle\\\\Repository\\.$#"
 			count: 1
 			path: src/Finder/Finder.php
