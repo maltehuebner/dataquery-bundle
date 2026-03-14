@@ -3,7 +3,11 @@
 namespace MalteHuebner\DataQueryBundle\Finder;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use FOS\ElasticaBundle\Repository;
+use MalteHuebner\DataQueryBundle\PaginatedResult\PaginatedResult;
+use MalteHuebner\DataQueryBundle\Parameter\FromParameter;
+use MalteHuebner\DataQueryBundle\Parameter\PageParameter;
 use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
 use MalteHuebner\DataQueryBundle\Parameter\SizeParameter;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
@@ -95,5 +99,83 @@ class Finder implements FinderInterface
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    #[\Override]
+    public function executePaginatedQuery(array $queryList, array $parameterList, int $page, int $size): PaginatedResult
+    {
+        if ($this->entityManager) {
+            return $this->executePaginatedOrmQuery($queryList, $parameterList, $page, $size);
+        }
+
+        if ($this->repository) {
+            return $this->executePaginatedElasticQuery($queryList, $parameterList, $page, $size);
+        }
+
+        return new PaginatedResult([], $page, $size, 0);
+    }
+
+    protected function executePaginatedElasticQuery(array $queryList, array $parameterList, int $page, int $size): PaginatedResult
+    {
+        $boolQuery = new \Elastica\Query\BoolQuery();
+
+        /** @var ElasticQueryInterface $query */
+        foreach ($queryList as $query) {
+            if ($query instanceof QueryInterface) {
+                $boolQuery->addMust($query->createElasticQuery());
+            }
+        }
+
+        $query = new \Elastica\Query($boolQuery);
+        $query->setFrom($page * $size);
+        $query->setSize($size);
+
+        /** @var ParameterInterface $parameter */
+        foreach ($parameterList as $parameter) {
+            if ($parameter instanceof ParameterInterface) {
+                $query = $parameter->addToElasticQuery($query);
+            }
+        }
+
+        $paginatorAdapter = $this->repository->createPaginatorAdapter($query);
+        $totalItems = $paginatorAdapter->getNbResults();
+        $results = $paginatorAdapter->getSlice(0, $size)->toArray();
+
+        return new PaginatedResult($results, $page, $size, $totalItems);
+    }
+
+    protected function executePaginatedOrmQuery(array $queryList, array $parameterList, int $page, int $size): PaginatedResult
+    {
+        $qb = $this->entityManager->createQueryBuilder()
+            ->select('e')
+            ->from($this->fqcn, 'e')
+        ;
+
+        /** @var OrmQueryInterface $query */
+        foreach ($queryList as $query) {
+            if ($query instanceof OrmQueryInterface) {
+                $qb = $query->createOrmQuery($qb);
+            }
+        }
+
+        /** @var ParameterInterface $parameter */
+        foreach ($parameterList as $parameter) {
+            if ($parameter instanceof SizeParameter || $parameter instanceof FromParameter || $parameter instanceof PageParameter) {
+                continue;
+            }
+
+            if ($parameter instanceof ParameterInterface && method_exists($parameter, 'addToOrmQuery')) {
+                $parameter->addToOrmQuery($qb);
+            }
+        }
+
+        $qb->setFirstResult($page * $size);
+        $qb->setMaxResults($size);
+
+        $paginator = new Paginator($qb->getQuery());
+        $totalItems = count($paginator);
+        $data = iterator_to_array($paginator);
+
+        return new PaginatedResult($data, $page, $size, $totalItems);
     }
 }
