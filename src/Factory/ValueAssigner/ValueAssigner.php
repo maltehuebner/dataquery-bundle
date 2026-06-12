@@ -3,6 +3,7 @@
 namespace MalteHuebner\DataQueryBundle\Factory\ValueAssigner;
 
 use Doctrine\Persistence\ManagerRegistry;
+use MalteHuebner\DataQueryBundle\Exception\EntityNotFoundException;
 use MalteHuebner\DataQueryBundle\FieldList\ParameterFieldList\ParameterField;
 use MalteHuebner\DataQueryBundle\FieldList\QueryFieldList\QueryField;
 use MalteHuebner\DataQueryBundle\Parameter\ParameterInterface;
@@ -117,13 +118,13 @@ class ValueAssigner implements ValueAssignerInterface
 
         $entity = $repository->$methodName($queryParameterValue);
 
-        if ($queryField->getAccessor()) {
+        if (null !== $entity && $queryField->getAccessor()) {
             $accessMethodName = $queryField->getAccessor();
             $entity = $entity->$accessMethodName();
         }
 
         if (null === $entity) {
-            return $query;
+            throw new EntityNotFoundException($parameterName, (string) $queryParameterValue);
         }
 
         $setMethodName = $queryField->getMethodName();

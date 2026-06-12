@@ -3,6 +3,8 @@
 namespace MalteHuebner\DataQueryBundle\Tests\Factory\ValueAssigner;
 
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectRepository;
+use MalteHuebner\DataQueryBundle\Exception\EntityNotFoundException;
 use MalteHuebner\DataQueryBundle\Factory\ValueAssigner\ValueAssigner;
 use MalteHuebner\DataQueryBundle\Factory\ValueAssigner\ValueAssignerInterface;
 use MalteHuebner\DataQueryBundle\Factory\ValueAssigner\ValueType;
@@ -11,6 +13,10 @@ use MalteHuebner\DataQueryBundle\FieldList\QueryFieldList\QueryField;
 use MalteHuebner\DataQueryBundle\Query\BoundingBoxQuery;
 use MalteHuebner\DataQueryBundle\Parameter\SizeParameter;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
+use MalteHuebner\DataQueryBundle\Tests\Fixtures\SimpleEntity;
+use MalteHuebner\DataQueryBundle\Tests\Fixtures\SimpleEntityContainer;
+use MalteHuebner\DataQueryBundle\Tests\Fixtures\SimpleEntityContainerRepository;
+use MalteHuebner\DataQueryBundle\Tests\Fixtures\SimpleEntityQuery;
 use PHPUnit\Framework\TestCase;
 
 class ValueAssignerTest extends TestCase
@@ -308,5 +314,131 @@ class ValueAssignerTest extends TestCase
         $this->valueAssigner->assignParameterPropertyValueFromRequest($list, $parameter, $parameterField);
 
         $this->assertTrue(true);
+    }
+
+    public function testAssignQueryEntityValueAssignsEntityFromRepository(): void
+    {
+        $entity = new SimpleEntity();
+
+        $repository = $this->createMock(ObjectRepository::class);
+        $repository->method('find')->with('42')->willReturn($entity);
+
+        $this->managerRegistry->method('getRepository')->with(SimpleEntity::class)->willReturn($repository);
+
+        $list = new RequestParameterList();
+        $list->add('simpleEntityId', '42');
+
+        $query = new SimpleEntityQuery();
+
+        $queryField = new QueryField();
+        $queryField
+            ->setMethodName('setSimpleEntity')
+            ->setParameterName('simpleEntityId')
+            ->setType(SimpleEntity::class);
+
+        $this->valueAssigner->assignQueryPropertyValueFromRequest($list, $query, $queryField);
+
+        $this->assertSame($entity, $query->getSimpleEntity());
+    }
+
+    public function testAssignQueryEntityValueThrowsWhenEntityNotFound(): void
+    {
+        $repository = $this->createMock(ObjectRepository::class);
+        $repository->method('find')->willReturn(null);
+
+        $this->managerRegistry->method('getRepository')->willReturn($repository);
+
+        $list = new RequestParameterList();
+        $list->add('simpleEntityId', '42');
+
+        $query = new SimpleEntityQuery();
+
+        $queryField = new QueryField();
+        $queryField
+            ->setMethodName('setSimpleEntity')
+            ->setParameterName('simpleEntityId')
+            ->setType(SimpleEntity::class);
+
+        $this->expectException(EntityNotFoundException::class);
+        $this->expectExceptionMessage('Could not find entity for query parameter "simpleEntityId" with value "42"');
+
+        $this->valueAssigner->assignQueryPropertyValueFromRequest($list, $query, $queryField);
+    }
+
+    public function testAssignQueryEntityValueWithAccessorAssignsAccessedEntity(): void
+    {
+        $entity = new SimpleEntity();
+        $repository = new SimpleEntityContainerRepository(new SimpleEntityContainer($entity));
+
+        $this->managerRegistry->method('getRepository')->with(SimpleEntityContainer::class)->willReturn($repository);
+
+        $list = new RequestParameterList();
+        $list->add('simpleEntitySlug', 'some-slug');
+
+        $query = new SimpleEntityQuery();
+
+        $queryField = new QueryField();
+        $queryField
+            ->setMethodName('setSimpleEntity')
+            ->setParameterName('simpleEntitySlug')
+            ->setType(SimpleEntity::class)
+            ->setRepository(SimpleEntityContainer::class)
+            ->setRepositoryMethod('findOneBySlug')
+            ->setAccessor('getSimpleEntity');
+
+        $this->valueAssigner->assignQueryPropertyValueFromRequest($list, $query, $queryField);
+
+        $this->assertSame($entity, $query->getSimpleEntity());
+    }
+
+    public function testAssignQueryEntityValueWithAccessorThrowsWhenLookupReturnsNull(): void
+    {
+        $repository = new SimpleEntityContainerRepository(null);
+
+        $this->managerRegistry->method('getRepository')->willReturn($repository);
+
+        $list = new RequestParameterList();
+        $list->add('simpleEntitySlug', 'unknown-slug');
+
+        $query = new SimpleEntityQuery();
+
+        $queryField = new QueryField();
+        $queryField
+            ->setMethodName('setSimpleEntity')
+            ->setParameterName('simpleEntitySlug')
+            ->setType(SimpleEntity::class)
+            ->setRepository(SimpleEntityContainer::class)
+            ->setRepositoryMethod('findOneBySlug')
+            ->setAccessor('getSimpleEntity');
+
+        $this->expectException(EntityNotFoundException::class);
+        $this->expectExceptionMessage('Could not find entity for query parameter "simpleEntitySlug" with value "unknown-slug"');
+
+        $this->valueAssigner->assignQueryPropertyValueFromRequest($list, $query, $queryField);
+    }
+
+    public function testAssignQueryEntityValueThrowsWhenAccessorReturnsNull(): void
+    {
+        $repository = new SimpleEntityContainerRepository(new SimpleEntityContainer(null));
+
+        $this->managerRegistry->method('getRepository')->willReturn($repository);
+
+        $list = new RequestParameterList();
+        $list->add('simpleEntitySlug', 'some-slug');
+
+        $query = new SimpleEntityQuery();
+
+        $queryField = new QueryField();
+        $queryField
+            ->setMethodName('setSimpleEntity')
+            ->setParameterName('simpleEntitySlug')
+            ->setType(SimpleEntity::class)
+            ->setRepository(SimpleEntityContainer::class)
+            ->setRepositoryMethod('findOneBySlug')
+            ->setAccessor('getSimpleEntity');
+
+        $this->expectException(EntityNotFoundException::class);
+
+        $this->valueAssigner->assignQueryPropertyValueFromRequest($list, $query, $queryField);
     }
 }
