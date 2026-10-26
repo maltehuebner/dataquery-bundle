@@ -42,16 +42,14 @@ class Finder implements FinderInterface
     {
         $boolQuery = new \Elastica\Query\BoolQuery();
 
-        /** @var ElasticQueryInterface $query */
         foreach ($queryList as $query) {
-            if ($query instanceof QueryInterface) {
+            if ($query instanceof ElasticQueryInterface) {
                 $boolQuery->addMust($query->createElasticQuery());
             }
         }
 
         $query = new \Elastica\Query($boolQuery);
 
-        /** @var ParameterInterface $parameter */
         foreach ($parameterList as $parameter) {
             if ($parameter instanceof ParameterInterface) {
                 $query = $parameter->addToElasticQuery($query);
@@ -68,7 +66,6 @@ class Finder implements FinderInterface
             ->from($this->fqcn, 'e')
         ;
 
-        /** @var OrmQueryInterface $query */
         foreach ($queryList as $query) {
             if ($query instanceof OrmQueryInterface) {
                 $qb = $query->createOrmQuery($qb);
@@ -78,13 +75,12 @@ class Finder implements FinderInterface
         $hasSizeParameter = false;
         $finalQuery = null;
 
-        /** @var ParameterInterface $parameter */
         foreach ($parameterList as $parameter) {
             if ($parameter instanceof SizeParameter) {
                 $hasSizeParameter = true;
             }
 
-            if ($parameter instanceof ParameterInterface && method_exists($parameter, 'addToOrmQuery')) {
+            if ($parameter instanceof ParameterInterface) {
                 $result = $parameter->addToOrmQuery($qb);
 
                 if ($result instanceof AbstractOrmQuery) {
@@ -119,9 +115,8 @@ class Finder implements FinderInterface
     {
         $boolQuery = new \Elastica\Query\BoolQuery();
 
-        /** @var ElasticQueryInterface $query */
         foreach ($queryList as $query) {
-            if ($query instanceof QueryInterface) {
+            if ($query instanceof ElasticQueryInterface) {
                 $boolQuery->addMust($query->createElasticQuery());
             }
         }
@@ -130,7 +125,6 @@ class Finder implements FinderInterface
         $query->setFrom($page * $size);
         $query->setSize($size);
 
-        /** @var ParameterInterface $parameter */
         foreach ($parameterList as $parameter) {
             if ($parameter instanceof ParameterInterface) {
                 $query = $parameter->addToElasticQuery($query);
@@ -151,20 +145,18 @@ class Finder implements FinderInterface
             ->from($this->fqcn, 'e')
         ;
 
-        /** @var OrmQueryInterface $query */
         foreach ($queryList as $query) {
             if ($query instanceof OrmQueryInterface) {
                 $qb = $query->createOrmQuery($qb);
             }
         }
 
-        /** @var ParameterInterface $parameter */
         foreach ($parameterList as $parameter) {
             if ($parameter instanceof SizeParameter || $parameter instanceof FromParameter || $parameter instanceof PageParameter) {
                 continue;
             }
 
-            if ($parameter instanceof ParameterInterface && method_exists($parameter, 'addToOrmQuery')) {
+            if ($parameter instanceof ParameterInterface) {
                 $parameter->addToOrmQuery($qb);
             }
         }
