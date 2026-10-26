@@ -13,7 +13,7 @@ class ParameterField extends AbstractField
 
     public function hasParameterName(): bool
     {
-        return $this->parameterName !== null;
+        return isset($this->parameterName);
     }
     
     public function getParameterName(): string
